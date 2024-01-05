@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904c8e31e8183c143a5aba4c2813a2e7, type: 3}
+  m_Name: WeDidNotFindTheSinner
+  m_EditorClassIdentifier: 
+  dialogText: 'We haven''t found the culprit, what do we tell people? '
+  followUps:
+  - answer: Tell the truth.
+    nextDialogElement: {fileID: 0}
+    requirement:
+      conditionType: 0
+      parameter: 0
+    modifyer:
+      radicalityChange: 0
+      oneTimeMentalChange: -1
+      foodChange: 0
+      materialChange: 0
+  - answer: The weakest member of the folck did it.
+    nextDialogElement: {fileID: 0}
+    requirement:
+      conditionType: 3
+      parameter: 0
+    modifyer:
+      radicalityChange: 1
+      oneTimeMentalChange: -1
+      foodChange: 0
+      materialChange: 0
+  - answer: This is the intrigue of outsiders!
+    nextDialogElement: {fileID: 0}
+    requirement:
+      conditionType: 1
+      parameter: 5
+    modifyer:
+      radicalityChange: 2
+      oneTimeMentalChange: 2
+      foodChange: 0
+      materialChange: 0
+  - answer: Say nothing.
+    nextDialogElement: {fileID: 0}
+    requirement:
+      conditionType: 0
+      parameter: 0
+    modifyer:
+      radicalityChange: 0
+      oneTimeMentalChange: 0
+      foodChange: 0
+      materialChange: 0

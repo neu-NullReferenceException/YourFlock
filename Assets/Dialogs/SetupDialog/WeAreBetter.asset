@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904c8e31e8183c143a5aba4c2813a2e7, type: 3}
+  m_Name: WeAreBetter
+  m_EditorClassIdentifier: 
+  dialogText: WE are better than THEM,
+  followUps:
+  - answer: and WE forgive the sinners
+    nextDialogElement: {fileID: 0}
+    requirement:
+      conditionType: 0
+      parameter: 0
+    modifyer:
+      radicalityChange: -1
+      oneTimeMentalChange: 0
+      foodChange: 0
+      materialChange: 0
+  - answer: 'and WE won''t forgive them for what they have done to US '
+    nextDialogElement: {fileID: 11400000, guid: 3d2b6684e244f8245bcc0b959d1bc544, type: 2}
+    requirement:
+      conditionType: 0
+      parameter: 0
+    modifyer:
+      radicalityChange: 3
+      oneTimeMentalChange: 0
+      foodChange: 0
+      materialChange: 0
