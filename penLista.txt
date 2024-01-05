@@ -1,0 +1,64 @@
+A UI fekete-szürkeárnyalatok-vérvörös skálából dolgozik, a hangulat nyomasztó, sötét, reményvesztett, kevés és tompa színű alapból.
+
+a játékos választásától függően változik a játék hangulata (ha a fanatikus irányba megy akkor még piros-szürke fekébb lesz,ha a segítő irányba megy akkor több lesz a szín, de ugyanúgy összességében sötét és nyomasztó lesz)
+
+
+pályák, hátterek és prop-ok:
+a háttereknek kéne két verzió
+	- egy szektásabb (piros-szürke-fekete)
+	- meg egy kevésbé szektásabb (kevesebb piros, több más szín, kicsit kevésbé nyomsztó légkör) 
+a játék stratégiai része top down, szóval a pályaelemek is azok, viszont azokból csak 1 féle kell, az lehet normális, majd post-processel kiveszem a színeket runtime.
+a pálya grid rendszerrel lesz megépítve szóval minden egységnek 1x1 méretűnek kell lenni és lehetőleg olyan mintával hogy végteleníthető legyen önmagával kombinálva (a propok lehetnek nagyobbak mert azoknak nem kell a gridre illeszkednie)
+hátterek:
+	- main game screen háttér:
+	egy templom ami előtt egy tábortűz fatönkökkel körberakva (nem ég), a terület saras
+
+MAP egységek (top-down):
+	- különböző füves mező min. 4db
+	- különböző földes mező min. 4db
+	- fatönk
+	- ház padló parketta
+	- ház padló csempe
+propok (top-down):
+	- fa láda
+	- fa hordó
+	- autóroncs
+	- szőnyeg
+	- asztal
+	- szobanövény
+	- kanapé
+	
+
+fegyverek (top-down + side view inventory ikon):
+	- AK47
+	- vascsövekből összetákolt géppisztoly
+	- valami vadászpuska
+	- egy Glock
+	- vascső
+	- baseball ütő
+	- nagy bozótvágó kés
+
+UI háttér:
+pixelart sötétszürke háttérpanel sötétebb szürke kerettel (átméretezhetőnek kéne lennie ez lenne az összes UI alapja)
+háttér néküli ikonok:
+pentagramm (vörös)
+egy tál benne két csont (barna-fehér-világos szürke)
+egy tál fűrészpor
+tilos jelzés (várakozni/parkoli tilos ikon)
+kisgyerek kéz kalapácsot fog
+emberek állnak egymás mellet/mögött (hoi4 manpower ikon)
+erőforrás ikon pl.:(fogaskerék + fadeszkák)
+kaja ikon (csülök vagy csirkecomb vagy kenyér)
+égő hátterű emberalak (ember fekete, tűz sárgás narancs)
+
+
+emberek:
+kell legalább 5 féle felülnézeti modell (kezek nélkül)
+min 5db oldalnézeti modell, (teljes testes portré szerűen, mint egy inventoryban)
+ugyanezekből egy-egy "profilkép" szerű portré
+
+particle sytemhez cuccok (ezek sokszorosításából lesz a particle system):
+	- vonalszerű esőcsepp (oldalnézet)
+	- muzzle flash (nem kell túlbonyolítani 3 db elég) sárgás-narancsos-fehér árnyalat
+	- tábortűz (oldalnézet)
+	
