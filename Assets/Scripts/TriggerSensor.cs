@@ -5,7 +5,19 @@ using UnityEngine;
 public class TriggerSensor : MonoBehaviour
 {
     private List<IDamagable> damagables = new List<IDamagable>();
-    
+
+    // ha esetleg eltöprengnél azon hogy ez itt mi, nos annak a következménye hogy a unity nem enged interface-t serializálni...
+    // vagyishát enged, csak nem használhatsz olyan objektumot ami így vagy úgy de a UnityEngine.Object bõl származik le...
+    // ezért a létezõ leggányolósabb módon lesz megolva. (így lehet már maga az interface is értelmetlen...)
+    // A TRIGGERABLE INTERFACEÛ SCRIPTNEK A ROOT OBJEKUMON KÉNE LENNIE! (de nem muszáj)
+    // ÉS tudom hogy egyszerûbb lett volna örököltetéssel megoldani, csak ezt 5369 sorral ez elõtt kellett volna hogy eszembe jusson
+    public ITriggerable triggerable;
+
+    private void Awake()
+    {
+        triggerable = transform.root.GetComponentInChildren<ITriggerable>();
+    }
+
     public List<IDamagable> GetPossibleTagets()
     {
         return damagables;
@@ -14,18 +26,22 @@ public class TriggerSensor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.TryGetComponent<IDamagable>(out IDamagable target))
+        Debug.Log(transform.root.name + "  GOT TRIGGERED BY" + other.name);
+        if(other.transform.root.TryGetComponent<IDamagable>(out IDamagable target))
         {
+            Debug.Log(transform.root.name + "  found damagable");
             if (!damagables.Contains(target))
             {
+                Debug.Log(transform.root.name + "  Got new target");
                 damagables.Add(target);
+                triggerable.OnNewEnemyInRange(target);
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent<IDamagable>(out IDamagable target))
+        if (other.transform.root.TryGetComponent<IDamagable>(out IDamagable target))
         {
             if (damagables.Contains(target))
             {
@@ -73,6 +89,14 @@ public class TriggerSensor : MonoBehaviour
 
         return closest;
     }
+
+    /*public void TriggerTriggerable(IDamagable target)
+    {
+        if (zombie)
+        {
+            zombie.OnNewEnemyInRange();
+        }
+    }*/
 }
 
 public interface ITriggerable

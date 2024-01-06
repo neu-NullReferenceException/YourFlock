@@ -214,16 +214,18 @@ MonoBehaviour:
     prefab: {fileID: 0}
     weapon: {fileID: 0}
   agent: {fileID: 7929990426426371681}
-  mTransform: {fileID: 0}
+  mTransform: {fileID: 3778967748121814087}
   targetDestination: {x: 0, y: 0}
   targetEnemyTransform: {fileID: 0}
   rotationSpeed: 1
   angleThreshold: 30
   maxChaseDistance: 0
+  hasOrder: 0
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
   animator: {fileID: 0}
+  sensor: {fileID: 0}
 --- !u!95 &7586309839404769407
 Animator:
   serializedVersion: 5
@@ -256,7 +258,7 @@ GameObject:
   - component: {fileID: 3778967748121814087}
   - component: {fileID: 5543155723049626162}
   m_Layer: 0
-  m_Name: Main
+  m_Name: MainBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

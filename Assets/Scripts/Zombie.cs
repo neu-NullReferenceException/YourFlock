@@ -81,6 +81,7 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
     {
         if (!targetEnemyTransform && newEnemy.GetTeamId() != 2)
         {
+            Debug.Log("Zombie Engaging!");
             targetEnemy = newEnemy;
             targetEnemyTransform = newEnemy.GetObject().transform;
             isTriggered = true;

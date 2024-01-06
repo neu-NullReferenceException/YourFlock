@@ -15,7 +15,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     public float rotationSpeed = 1;
     public float angleThreshold = 30;
     public float maxChaseDistance;
-    private bool hasOrder = false;
+    [SerializeField] private bool hasOrder = false;
     public LayerMask obstacleLayer;
     public Animator animator;
     private float lastAttackTime;
