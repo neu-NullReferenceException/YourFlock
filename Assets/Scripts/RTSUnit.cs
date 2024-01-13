@@ -90,12 +90,15 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public void TryToAttack()
     {
+        
         if(Time.time - lastAttackTime >= myFollower.weapon.weaponStats.attackDelay)
         {
             if (HasLineOfSight(transform, targetEnemyTransform))
             {
+                
                 if (IsFacingAngle(GetLookAngleDifference(targetEnemyTransform)))
                 {
+                    Debug.Log("TryToAttack");
                     Attack();
                 }
                 else
@@ -132,7 +135,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         }
     }
 
-    public void LookAt(Transform target) //Lehet át kell írni Y tengejre 
+    public void LookAt(Transform target)
     {
         Vector2 direction = target.position - mTransform.position;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -140,6 +143,9 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         // Smoothly interpolate the rotation over time
         float angle = Mathf.MoveTowardsAngle(mTransform.rotation.eulerAngles.z, targetAngle, rotationSpeed * Time.deltaTime);
         mTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        //float angle = Mathf.MoveTowardsAngle(mTransform.rotation.eulerAngles.y, targetAngle, rotationSpeed * Time.deltaTime);
+        //mTransform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
     public void ReturnToIdleRotationLocal(Transform target)
@@ -150,7 +156,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public bool IsFacingAngle(float desiredAngle) // Lehet át kell írni Y tengejre
     {
-        float currentAngle = mTransform.rotation.eulerAngles.z;
+        float currentAngle = mTransform.rotation.eulerAngles.y;
 
         // Calculate the absolute difference between current and desired angles
         float angleDifference = Mathf.Abs(Mathf.DeltaAngle(currentAngle, desiredAngle));

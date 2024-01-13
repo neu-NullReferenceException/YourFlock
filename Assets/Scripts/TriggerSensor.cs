@@ -26,7 +26,7 @@ public class TriggerSensor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(transform.root.name + "  GOT TRIGGERED BY" + other.name);
+        Debug.Log(transform.root.name + "  GOT TRIGGERED BY" + other.transform.root.name);
         if(other.transform.root.TryGetComponent<IDamagable>(out IDamagable target))
         {
             Debug.Log(transform.root.name + "  found damagable");

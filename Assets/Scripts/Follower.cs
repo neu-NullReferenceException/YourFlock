@@ -32,4 +32,12 @@ public class Follower
 
         return weapon.weaponStats.damage + (strength * 3);
     }
+
+    public Follower(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+        strength = Random.Range(0, 6);
+        strength = Random.Range(0, 6);
+    }
 }

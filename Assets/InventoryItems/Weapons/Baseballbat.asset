@@ -19,6 +19,6 @@ MonoBehaviour:
   prefab: {fileID: 0}
   weaponStats:
     usesAmmo: 0
-    range: 1.5
+    range: 2.2
     attackDelay: 1
     damage: 50
