@@ -22,6 +22,8 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public TriggerSensor sensor;
 
+    public Quaternion globalRot;
+
     private void Awake()
     {
         //agent.stoppingDistance = 1;
@@ -68,6 +70,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         {
             hasOrder = false;
         }
+        globalRot = mTransform.rotation;
 
         if (targetEnemy != null)
         {
@@ -93,8 +96,8 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         
         if(Time.time - lastAttackTime >= myFollower.weapon.weaponStats.attackDelay)
         {
-            if (HasLineOfSight(transform, targetEnemyTransform))
-            {
+            /*if (HasLineOfSight(transform, targetEnemyTransform))
+            {*/
                 
                 if (IsFacingAngle(GetLookAngleDifference(targetEnemyTransform)))
                 {
@@ -103,9 +106,10 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
                 }
                 else
                 {
+                    //Debug.Log("Looking at: " + GetLookAngleDifference(targetEnemyTransform));
                     LookAt(targetEnemyTransform);
                 }
-            }
+            //}
         }
     }
 
@@ -113,6 +117,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     {
         if (!myFollower.weapon.weaponStats.usesAmmo)
         {
+            Debug.Log("ANIM HIT");
             animator.Play("Attack");
         }
         lastAttackTime = Time.time;
@@ -138,7 +143,8 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     public void LookAt(Transform target)
     {
         Vector2 direction = target.position - mTransform.position;
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float targetAngle = Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg; // ez jó irányba néz
 
         // Smoothly interpolate the rotation over time
         float angle = Mathf.MoveTowardsAngle(mTransform.rotation.eulerAngles.z, targetAngle, rotationSpeed * Time.deltaTime);
@@ -150,13 +156,13 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public void ReturnToIdleRotationLocal(Transform target)
     {
-        float angle = Mathf.MoveTowardsAngle(mTransform.localRotation.eulerAngles.y, 0, rotationSpeed * Time.deltaTime);
-        mTransform.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        float angle = Mathf.MoveTowardsAngle(mTransform.localRotation.eulerAngles.z, 0, rotationSpeed * Time.deltaTime);
+        mTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
-    public bool IsFacingAngle(float desiredAngle) // Lehet át kell írni Y tengejre
+    public bool IsFacingAngle(float desiredAngle)
     {
-        float currentAngle = mTransform.rotation.eulerAngles.y;
+        float currentAngle = mTransform.rotation.eulerAngles.z;
 
         // Calculate the absolute difference between current and desired angles
         float angleDifference = Mathf.Abs(Mathf.DeltaAngle(currentAngle, desiredAngle));
@@ -165,10 +171,11 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         return angleDifference < angleThreshold;
     }
 
-    public float GetLookAngleDifference(Transform target) // Lehet át kell írni Y tengejre
+    public float GetLookAngleDifference(Transform target) // az egész alapból tartalmaz egy 90 fokos offset-et
     {
         Vector2 direction = target.position - transform.position;
-        return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        return Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg;
     }
 
     public void TakeDamage(int amount, GameObject sender)

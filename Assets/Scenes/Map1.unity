@@ -1585,8 +1585,8 @@ MonoBehaviour:
   isTriggered: 0
   attackDelay: 1
   attackRange: 2
-  minDamage: 20
-  maxDamage: 30
+  minDamage: 0
+  maxDamage: 1
 --- !u!50 &659972166
 Rigidbody2D:
   serializedVersion: 4
@@ -6484,6 +6484,10 @@ PrefabInstance:
     - target: {fileID: 8811334624576925748, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208267255017439976, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
+      propertyPath: rotationSpeed
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 9208267255017439976, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
       propertyPath: myFollower.weapon
