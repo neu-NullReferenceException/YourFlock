@@ -27,6 +27,25 @@ public class GameManager : MonoBehaviour
     public GameObject banishCanvasEnd;
     public TextMeshProUGUI banishedFollowerNameText;
     public TextMeshProUGUI banishedFollowerNameTextEnd;
+    [Space(5)]
+    [Header("Main Screen References")]
+    public GameObject peopleCanvas;
+    public GameObject rationsCanvas;
+    public GameObject measuresCanvas;
+    public GameObject inventoryCanvas;
+    public GameObject tasksCanvas;
+    [Header("Canvas Item Prefabs")] // minden ami listázáshoz kell prefab
+    public GameObject peopleCanvasItemPrefab;
+    public GameObject rationsCanvasItemPrefab;
+    public GameObject inventoryCanvasItemPrefab;
+    public GameObject tasksCanvasItemPrefab;
+    [Header("Canvas Contents")] // ezek alá kell a lista elemeket parentelni példányosítás után
+    public Transform peopleCanvasContent;
+    public Transform rationsCanvasContent;
+    public Transform inventoryCanvasContent;
+    public Transform tasksCanvasContent;
+
+
 
 
     private void Start()
@@ -157,7 +176,7 @@ public class GameManager : MonoBehaviour
                     Sacrifice(StaticDataProvider.GetYungestFollower());
                     break;
                 case OutcomeEventType.BanishTheWeakest:
-
+                    Banish(StaticDataProvider.GetWeakestFollower());
                     break;
             }
         }
@@ -199,6 +218,11 @@ public class GameManager : MonoBehaviour
     {
         currentEvent = @event;
         DisplayDialog(@event.dialoge);
+    }
+
+    public void RefreshPeoplePanel()
+    {
+        
     }
 
 }

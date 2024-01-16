@@ -17,6 +17,8 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
     public float attackRange = 1;
     public int minDamage;
     public int maxDamage;
+    // ForceRecompile
+    public int DELETE;
 
     public GameObject GetObject()
     {
