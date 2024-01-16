@@ -41,6 +41,12 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
             }
             
         }
+
+        if(heath <= 0)
+        {
+            // halál logika - most csak töröl
+            Destroy(gameObject);
+        }
     }
     private void Awake()
     {

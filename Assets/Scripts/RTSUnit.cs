@@ -22,8 +22,6 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public TriggerSensor sensor;
 
-    public Quaternion globalRot;
-
     private void Awake()
     {
         //agent.stoppingDistance = 1;
@@ -50,6 +48,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     public void MoveTo(Vector2 target)  // CSAK USER INPUTRA HÍVJUK EZT NEM SZABAD FELÜLÍRNIA SEMMILYEN PARANCSNAK
     {
         hasOrder = true;
+        Debug.Log("OrderGiven");
         targetDestination = target;
         agent.SetDestination(new Vector3(targetDestination.x, targetDestination.y));
     }
@@ -66,17 +65,19 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     private void Update()
     {
-        if (hasOrder && !agent.hasPath)
+        if (hasOrder && (!agent.hasPath )) //|| agent.pathStatus == NavMeshPathStatus.PathComplete
         {
             hasOrder = false;
+            Debug.Log("OrderCompleate!");
         }
-        globalRot = mTransform.rotation;
+        //globalRot = mTransform.rotation;
 
-        if (targetEnemy != null)
+        if (targetEnemy != null &&  targetEnemyTransform != null)
         {
             float d = Vector2.Distance(transform.position, targetEnemyTransform.position);
             if (d > myFollower.weapon.weaponStats.range && d < maxChaseDistance && !hasOrder)
             {
+                Debug.Log("CHASE");
                 agent.SetDestination(new Vector3(targetEnemyTransform.position.x, targetEnemyTransform.position.y));
             }
             else if(d <= myFollower.weapon.weaponStats.range)
@@ -85,9 +86,14 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
             }
             else if (d > maxChaseDistance)
             {
-                targetEnemy = null;
-                targetEnemyTransform = null;
+                //targetEnemy = null;
+                //targetEnemyTransform = null;
+                // majd kell valami custom logika a követés feladására
             }
+        }
+        else
+        {
+            ReturnToIdleRotationLocal();
         }
     }
 
@@ -101,7 +107,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
                 
                 if (IsFacingAngle(GetLookAngleDifference(targetEnemyTransform)))
                 {
-                    Debug.Log("TryToAttack");
+                    //Debug.Log("TryToAttack");
                     Attack();
                 }
                 else
@@ -117,7 +123,6 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     {
         if (!myFollower.weapon.weaponStats.usesAmmo)
         {
-            Debug.Log("ANIM HIT");
             animator.Play("Attack");
         }
         lastAttackTime = Time.time;
@@ -154,10 +159,10 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         //mTransform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
-    public void ReturnToIdleRotationLocal(Transform target)
+    public void ReturnToIdleRotationLocal()
     {
-        float angle = Mathf.MoveTowardsAngle(mTransform.localRotation.eulerAngles.z, 0, rotationSpeed * Time.deltaTime);
-        mTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        float angle = Mathf.MoveTowardsAngle(mTransform.localRotation.eulerAngles.z, 0, rotationSpeed/2 * Time.deltaTime);
+        mTransform.localRotation = Quaternion.Euler(new Vector3(90, 0, angle)); // vagy mégse?
     }
 
     public bool IsFacingAngle(float desiredAngle)
@@ -208,10 +213,13 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public void OnNewEnemyInRange(IDamagable newEnemy)
     {
+        //Debug.Log("Hostile To RTS unit: " + StaticDataProvider.HostilityMatrix[newEnemy.GetTeamId()]);
         if (!targetEnemyTransform && StaticDataProvider.HostilityMatrix[newEnemy.GetTeamId()])
         {
+            //Debug.Log("TARGET LOCKED!");
             targetEnemy = newEnemy;
-            targetEnemyTransform = newEnemy.GetObject().transform;
+            targetEnemyTransform = targetEnemy.GetObject().transform;
+            Debug.Log("TARGET LOCKED: " + targetEnemy.GetObject().name);
         }
     }
 }
