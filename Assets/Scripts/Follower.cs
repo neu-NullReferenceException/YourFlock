@@ -23,6 +23,8 @@ public class Follower
     public GameObject prefab;
     public InventoryItem weapon;
 
+    public string story;
+
     public int CalculateDamage()
     {
         if (weapon.weaponStats.usesAmmo)

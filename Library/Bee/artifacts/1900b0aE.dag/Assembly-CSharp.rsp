@@ -400,6 +400,7 @@
 "Assets/Scripts/DialogeChoiseRequirement.cs"
 "Assets/Scripts/DialogeElement.cs"
 "Assets/Scripts/Follower.cs"
+"Assets/Scripts/FollowerListButton.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/IDamagable.cs"
 "Assets/Scripts/InventoryItem.cs"

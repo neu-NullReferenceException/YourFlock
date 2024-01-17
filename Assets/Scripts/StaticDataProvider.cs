@@ -20,7 +20,18 @@ public static class StaticDataProvider
         true,
         false,
         true,
-    }; 
+    };
+
+    public static string[] firstNames = {
+    "Olivia","Zoe","Ava","Sophia","Emma","Mia","Isabella","Ella","Grace","Harper","Abigail","Lily","Chloe","Madison","Anne",
+    "Ethan","Jackson","Joe","Mason","Aiden","Liam","Noah","Lucas","Logan","Owen","Carter","Samuel","Benjamin","Gabriel","Daniel"
+    };
+    public static string[] lastNames ={
+    "Williams","Harrison","Gonzalez","Mitchell","Scott","Fisher","Palmer","Jenkins","Ward","Harrison","Evans","Fleming","Bishop","Wong",
+    "Barnes","Hansen","Gill","Lawson","Fitzgerald","Horton","Montgomery","Walters","Brewer","Barnett","Reeves","Wheeler","Riley","Hudson",
+    "Baxter"
+    };
+    public static Sprite[] profilePics;
 
     public static void AddRadicallity(int amount)
     {
@@ -102,5 +113,16 @@ public static class StaticDataProvider
     {
         followers.Remove(f);
         OneTimeCollectiveMentalChange(defaultDeathMentalChange);
+    }
+
+    public static void AddRandomFollower(int number)
+    {
+        for (int i = 0; i < number; i++)
+        {
+            string name = firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+            Follower f = new Follower(name, Random.Range(5, 65));
+            //f.profilePic = profilePics[Random.Range(0, profilePics.Length)];
+            followers.Add(f);
+        }
     }
 }

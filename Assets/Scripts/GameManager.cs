@@ -45,12 +45,28 @@ public class GameManager : MonoBehaviour
     public Transform inventoryCanvasContent;
     public Transform tasksCanvasContent;
 
+    private Follower currentFollower;
+    [Header("People Panel Fields")]
+    public TextMeshProUGUI pplNameText;
+    public TextMeshProUGUI pplStoryText;
+    public Image weaponImage;
+    public GameObject extraOptions;
+    [Header("Ration Panel Fields")]
+    public TextMeshProUGUI totalConsumptionText;
+    public Slider rationSlider;
+    public TextMeshProUGUI rationSliderText;
+    public GameObject extraOptionsRations;
 
 
 
     private void Start()
     {
         Application.targetFrameRate = 30;
+        // DEV ONLY
+        if(StaticDataProvider.followers.Count == 0)
+        {
+            StaticDataProvider.AddRandomFollower(3);
+        }
     }
 
     public void BeginGame()
@@ -190,12 +206,24 @@ public class GameManager : MonoBehaviour
         sacrificeButton.currentFollower = f;
         //StaticDataProvider.followers.Remove(f);
     }
+    public void StartSacrificeCurrent()
+    {
+        sacrificeCanvas.SetActive(true);
+        sacrificedFollowerNameText.text = currentFollower.name;
+        sacrificeButton.currentFollower = currentFollower;
+    }
 
     public void StartBanish(Follower f)
     {
-        banishCanvasEnd.SetActive(true);
+        banishCanvas.SetActive(true);
         banishButton.currentFollower = f;
-        banishedFollowerNameTextEnd.text = f.name;
+        banishedFollowerNameText.text = f.name;
+    }
+    public void StartBanishCurrent()
+    {
+        banishCanvas.SetActive(true);
+        banishButton.currentFollower = currentFollower;
+        banishedFollowerNameText.text = currentFollower.name;
     }
 
     public void Sacrifice(Follower f)
@@ -222,7 +250,88 @@ public class GameManager : MonoBehaviour
 
     public void RefreshPeoplePanel()
     {
-        
+        peopleCanvas.SetActive(true);
+
+        //cleanup
+        for (int i = 0; i < peopleCanvasContent.childCount; i++)
+        {
+            Destroy(peopleCanvasContent.GetChild(0).gameObject);
+        }
+
+        //populate
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            GameObject o = Instantiate(peopleCanvasItemPrefab, peopleCanvasContent);
+            o.GetComponent<FollowerListButton>().Setup(f);
+        }
     }
 
+    public void RefreshPeoplePanelInfo()
+    {
+        pplNameText.text = currentFollower.name;
+        pplStoryText.text = currentFollower.story;
+        if (currentFollower.weapon != null)
+        {
+            weaponImage.gameObject.SetActive(true);
+            weaponImage.sprite = currentFollower.weapon.itemIcon;
+        }
+        else
+        {
+            weaponImage.gameObject.SetActive(false);
+        }
+        extraOptions.SetActive(true);
+    }
+
+    public void RefreshRationsPanel()
+    {
+        rationsCanvas.SetActive(true);
+
+        //cleanup
+        for (int i = 0; i < rationsCanvasContent.childCount; i++)
+        {
+            Destroy(rationsCanvasContent.GetChild(0).gameObject);
+        }
+
+        //populate
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            GameObject o = Instantiate(rationsCanvasItemPrefab, rationsCanvasContent);
+            o.GetComponent<FollowerListButton>().Setup(f);
+        }
+    }
+
+    public void RefreshRationsPanelInfo()
+    {
+        pplNameText.text = currentFollower.name;
+        pplStoryText.text = currentFollower.story;
+        extraOptionsRations.SetActive(true);
+    }
+
+    public void SetRationForCurrent()
+    {
+        currentFollower.dayliRation = (int)rationSlider.value;
+        for (int i = 0; i < rationsCanvasContent.childCount; i++)
+        {
+            rationsCanvasContent.GetChild(i).GetComponent<FollowerListButton>().Refresh();
+        }
+    }
+
+    public void UpdateRationSliderText()
+    {
+        rationSliderText.text = rationSlider.value + " Kcal";
+    }
+
+    public void SetSelectedFollower(Follower f)
+    {
+        currentFollower = f;
+    }
+
+    public void ClearSelectedFollower()
+    {
+        extraOptions.SetActive(false);
+        extraOptionsRations.SetActive(false);
+        currentFollower = null;
+    }
+
+    
 }
