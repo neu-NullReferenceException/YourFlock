@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f5594355e978e249b773133f942aee3, type: 3}
-  m_Name: Baseballbat
+  m_Name: Knife
   m_EditorClassIdentifier: 
-  name: Baseballbat
+  name: Machete
   type: 2
-  description: It will get the job done...
-  itemIcon: {fileID: 0}
+  description: A razor sharp hardened steel dagger can always prove usefull
+  itemIcon: {fileID: 21300000, guid: a2982b50852ab4548beb4b9fc2a69e6a, type: 3}
   prefab: {fileID: 0}
+  cost: 2
   weaponStats:
     usesAmmo: 0
-    range: 2.2
-    attackDelay: 1
+    range: 2
+    attackDelay: 0.5
     damage: 50

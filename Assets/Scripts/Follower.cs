@@ -22,6 +22,7 @@ public class Follower
     public Sprite profilePic;
     public GameObject prefab;
     public InventoryItem weapon;
+    public FollowerTask daylyTask;
 
     public string story;
 
@@ -42,4 +43,11 @@ public class Follower
         strength = Random.Range(0, 6);
         strength = Random.Range(0, 6);
     }
+}
+
+public enum FollowerTask
+{
+    Idle,
+    Worker,
+    Scout,
 }

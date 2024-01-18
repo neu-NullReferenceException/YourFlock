@@ -404,6 +404,8 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/IDamagable.cs"
 "Assets/Scripts/InventoryItem.cs"
+"Assets/Scripts/InventoryItemHolder.cs"
+"Assets/Scripts/Map.cs"
 "Assets/Scripts/RandomEvent.cs"
 "Assets/Scripts/RTSManager.cs"
 "Assets/Scripts/RTSUnit.cs"

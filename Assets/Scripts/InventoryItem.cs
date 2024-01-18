@@ -13,6 +13,7 @@ public class InventoryItem : ScriptableObject
     public Sprite itemIcon;
     public GameObject prefab;
 
+    public int cost;
     public WeaponStats weaponStats;
 }
 

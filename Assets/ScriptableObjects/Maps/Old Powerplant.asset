@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948e8e0cfbb6a4d47a5737ab74cd431a, type: 3}
+  m_Name: Old Powerplant
+  m_EditorClassIdentifier: 
+  name: Old Powerplant
+  scene:
+    m_Handle: 0
+  description: A huge coal powerplant. After the collapse of supply chains it ran
+    out of coal. I wonder if it is functional...

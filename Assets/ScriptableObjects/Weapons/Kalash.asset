@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f5594355e978e249b773133f942aee3, type: 3}
-  m_Name: Glock
+  m_Name: Kalash
   m_EditorClassIdentifier: 
-  name: Glock
-  type: 0
-  description: High quality pistol. Before the collapse, I used to own one...
-  itemIcon: {fileID: 1076815132, guid: 3f1dc0ba18445b345a4fae40b4f2645c, type: 3}
+  name: Ak-47
+  type: 2
+  description: An old but reliable solution for most problems.
+  itemIcon: {fileID: -224047852, guid: 3f1dc0ba18445b345a4fae40b4f2645c, type: 3}
   prefab: {fileID: 0}
+  cost: 10
   weaponStats:
     usesAmmo: 1
-    range: 17
-    attackDelay: 0.5
+    range: 20
+    attackDelay: 0.3
     damage: 30

@@ -10,7 +10,10 @@ public static class StaticDataProvider
     public static int food = 12000;   //(kcal) az egyszerûség kedvéért minden ember hogy ne éhezzen default 1000 kcal/ nap fogyaszt
     public static int defaultFoodConsumption = 1000;
     public static int defaultDeathMentalChange = 5;
+    public static int defaultDaylyRadicalityChange = 5;
+    public static int daysPassed = 1;
     public static List<InventoryItem> inventoryItems = new List<InventoryItem>();
+    public static List<InventoryItem> craftingQueue = new List<InventoryItem>();
     public static List<Follower> followers = new List<Follower>();
     public static List<Follower> banishedPeople = new List<Follower>();
     public static List<Follower> strikeTeam = new List<Follower>();
@@ -124,5 +127,18 @@ public static class StaticDataProvider
             //f.profilePic = profilePics[Random.Range(0, profilePics.Length)];
             followers.Add(f);
         }
+    }
+
+    public static int CountInventoryItem(InventoryItem item)
+    {
+        int c = 0;
+        foreach (InventoryItem i in inventoryItems)
+        {
+            if(i.name == item.name)
+            {
+                c++;
+            }
+        }
+        return c;
     }
 }

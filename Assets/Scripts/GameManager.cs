@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public GameObject[] answerButtons;
 
+    public InventoryItem[] allCraftablesInGame;
+
     private RandomEvent currentEvent;
     private OutcomeEvent eventToTriggerAfterDialogEnd = new OutcomeEvent();
 
@@ -43,25 +45,43 @@ public class GameManager : MonoBehaviour
     public Transform peopleCanvasContent;
     public Transform rationsCanvasContent;
     public Transform inventoryCanvasContent;
-    public Transform tasksCanvasContent;
+    //public Transform tasksCanvasContent;
 
     private Follower currentFollower;
+    private InventoryItem currentItem;
+    private Map currentMap;
+
     [Header("People Panel Fields")]
-    public TextMeshProUGUI pplNameText;
-    public TextMeshProUGUI pplStoryText;
-    public Image weaponImage;
-    public GameObject extraOptions;
+    [SerializeField] private TextMeshProUGUI pplNameText;
+    [SerializeField] private TextMeshProUGUI pplStoryText;
+    [SerializeField] private Image weaponImage;
+    [SerializeField] private GameObject extraOptions;
     [Header("Ration Panel Fields")]
-    public TextMeshProUGUI totalConsumptionText;
-    public Slider rationSlider;
-    public TextMeshProUGUI rationSliderText;
-    public GameObject extraOptionsRations;
+    [SerializeField] private TextMeshProUGUI totalConsumptionText;
+    [SerializeField] private Slider rationSlider;
+    [SerializeField] private TextMeshProUGUI rationSliderText;
+    [SerializeField] private GameObject extraOptionsRations;
+    [Header("Inventory Panel Fields")]
+    [SerializeField] private TextMeshProUGUI costText;
+    [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private TextMeshProUGUI descText;
+    [SerializeField] private GameObject extraOptionsInventory;
+    [Header("Task Panel Fields")]
+    [SerializeField] private Transform idleContent;
+    [SerializeField] private Transform workContent;
+    [SerializeField] private Transform scoutContent;
+    //[SerializeField] private GameObject TaskPanelPrefab;
+    [Header("Map Detail Panel Fields")]
+    [SerializeField] private TextMeshProUGUI areaNameText;
+    [SerializeField] private TextMeshProUGUI areaDescText;
+    [SerializeField] private Image mapImage;
+
 
 
 
     private void Start()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
         // DEV ONLY
         if(StaticDataProvider.followers.Count == 0)
         {
@@ -250,20 +270,23 @@ public class GameManager : MonoBehaviour
 
     public void RefreshPeoplePanel()
     {
-        peopleCanvas.SetActive(true);
 
         //cleanup
+        //int x = peopleCanvasContent.childCount;
         for (int i = 0; i < peopleCanvasContent.childCount; i++)
         {
-            Destroy(peopleCanvasContent.GetChild(0).gameObject);
+            Destroy(peopleCanvasContent.GetChild(i).gameObject);
+            //Debug.Log("Deleted People list prefab");
         }
-
         //populate
         foreach (Follower f in StaticDataProvider.followers)
         {
+            //Debug.Log(f.name);
             GameObject o = Instantiate(peopleCanvasItemPrefab, peopleCanvasContent);
             o.GetComponent<FollowerListButton>().Setup(f);
         }
+        peopleCanvas.SetActive(true);
+        
     }
 
     public void RefreshPeoplePanelInfo()
@@ -289,7 +312,7 @@ public class GameManager : MonoBehaviour
         //cleanup
         for (int i = 0; i < rationsCanvasContent.childCount; i++)
         {
-            Destroy(rationsCanvasContent.GetChild(0).gameObject);
+            Destroy(rationsCanvasContent.GetChild(i).gameObject);
         }
 
         //populate
@@ -298,13 +321,109 @@ public class GameManager : MonoBehaviour
             GameObject o = Instantiate(rationsCanvasItemPrefab, rationsCanvasContent);
             o.GetComponent<FollowerListButton>().Setup(f);
         }
+
+        totalConsumptionText.text = StaticDataProvider.CalculateFoodConsumption() + "";
     }
 
     public void RefreshRationsPanelInfo()
     {
         pplNameText.text = currentFollower.name;
         pplStoryText.text = currentFollower.story;
+        totalConsumptionText.text = StaticDataProvider.CalculateFoodConsumption() + "";
         extraOptionsRations.SetActive(true);
+    }
+
+    public void RefreshInventoryCanvas()
+    {
+        inventoryCanvas.SetActive(true);
+
+        //cleanup
+        for (int i = 0; i < inventoryCanvasContent.childCount; i++)
+        {
+            Destroy(inventoryCanvasContent.GetChild(i).gameObject);
+        }
+
+        //populate
+        foreach (InventoryItem f in allCraftablesInGame)
+        {
+            GameObject o = Instantiate(inventoryCanvasItemPrefab, inventoryCanvasContent);
+            o.GetComponent<InventoryItemHolder>().Setup(f);
+        }
+    }
+
+    public void RefreshInventoryPanelInfo()
+    {
+        costText.text = "Cost: " + currentItem.cost + " material";
+        descText.text = currentItem.description;
+        itemNameText.text = currentItem.name + " " + StaticDataProvider.CountInventoryItem(currentItem) + "x";
+        extraOptionsInventory.SetActive(true);
+    }
+
+    public void RefreshTaskCanvas()
+    {
+        tasksCanvas.SetActive(true);
+
+        //cleanup
+        for (int i = 0; i < idleContent.childCount; i++)
+        {
+            Destroy(idleContent.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < workContent.childCount; i++)
+        {
+            Destroy(workContent.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < scoutContent.childCount; i++)
+        {
+            Destroy(scoutContent.GetChild(i).gameObject);
+        }
+
+        //populate
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            if(f.daylyTask != FollowerTask.Idle) { continue; }
+            GameObject o = Instantiate(tasksCanvasItemPrefab, idleContent);
+            o.GetComponent<FollowerListButton>().Setup(f);
+        }
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            if (f.daylyTask != FollowerTask.Worker) { continue; }
+            GameObject o = Instantiate(tasksCanvasItemPrefab, workContent);
+            o.GetComponent<FollowerListButton>().Setup(f);
+        }
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            if (f.daylyTask != FollowerTask.Scout) { continue; }
+            GameObject o = Instantiate(tasksCanvasItemPrefab, scoutContent);
+            o.GetComponent<FollowerListButton>().Setup(f);
+        }
+    }
+
+
+    public void AssignCurrentToTask(int taskID)
+    {
+        if (currentFollower == null) { return; }
+
+        switch ((FollowerTask)taskID)
+        {
+            case FollowerTask.Idle:
+                currentFollower.daylyTask = FollowerTask.Idle;
+                break;
+            case FollowerTask.Worker:
+                currentFollower.daylyTask = FollowerTask.Worker;
+                break;
+            case FollowerTask.Scout:
+                if(StaticDataProvider.strikeTeam.Count > 5)
+                {
+                    break;
+                }
+                currentFollower.daylyTask = FollowerTask.Scout;
+                UpdateStrikeTeam();
+                break;
+            default:
+                break;
+        }
+
+        RefreshTaskCanvas();
     }
 
     public void SetRationForCurrent()
@@ -324,6 +443,27 @@ public class GameManager : MonoBehaviour
     public void SetSelectedFollower(Follower f)
     {
         currentFollower = f;
+
+        if (rationsCanvas)
+        {
+            if (rationsCanvas.activeSelf)
+            {
+                rationSlider.value = f.dayliRation;
+                rationSliderText.text = f.dayliRation + " Kcal";
+            }
+        }
+    }
+
+    public void SetSelectedInventoryItem(InventoryItem i)
+    {
+        currentItem = i;
+        RefreshInventoryPanelInfo();
+    }
+
+    public void ClearSelectedInventoryItem()
+    {
+        currentItem = null;
+        extraOptionsInventory.SetActive(false);
     }
 
     public void ClearSelectedFollower()
@@ -333,5 +473,93 @@ public class GameManager : MonoBehaviour
         currentFollower = null;
     }
 
+    public void ShowMapInfo()
+    {
+        mapImage.sprite = currentMap.image;
+        areaNameText.text = currentMap.name;
+        areaDescText.text = currentMap.description;
+    }
+
+    public void SetSelectedMapInfo(Map m)
+    {
+        currentMap = m;
+    }
+
+    public void UpdateStrikeTeam()
+    {
+        StaticDataProvider.strikeTeam.Clear();
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            if(f.daylyTask == FollowerTask.Scout)
+            {
+                StaticDataProvider.strikeTeam.Add(f);
+            }
+        }
+    }
+
+    public int CountOfCrafters()
+    {
+        int i = 0;
+        foreach (Follower f in StaticDataProvider.followers)
+        {
+            if (f.daylyTask == FollowerTask.Worker)
+            {
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public void LaunchMission()
+    {
+        UpdateStrikeTeam();
+        if(StaticDataProvider.strikeTeam.Count < 1)
+        {
+            // ide valami error window
+            return;
+        }
+
+        SceneManager.LoadScene(currentMap.scene.buildIndex);
+    }
+
+    public void NextDay()
+    {
+        StaticDataProvider.FeedPopulation();
+        StaticDataProvider.daysPassed++;
+
+        if(StaticDataProvider.followers.Count == 0)
+        {
+            Debug.LogError("YOU LOST");
+        }
+    }
+
+    public void AddToCraftingQeue()
+    {
+        if(StaticDataProvider.craftingQueue.Count <= CountOfCrafters())
+        {
+            // ide valami error windowt
+            Debug.Log("Additional supplydepots required!");
+            return;
+        }
+        if (currentItem.cost > StaticDataProvider.material)
+        {
+            // ide valami error windowt
+            Debug.Log("Not enugh minerals!");
+            return;
+        }
+
+        StaticDataProvider.craftingQueue.Add(currentItem);
+    }
+
+    public void CraftAll()
+    {
+        for (int i = 0; i < StaticDataProvider.craftingQueue.Count; i++)    // azért nem foreach mer duplikált elemek elõfordulhatnak
+        {
+            StaticDataProvider.material -= StaticDataProvider.craftingQueue[i].cost;
+
+            StaticDataProvider.inventoryItems.Add(StaticDataProvider.craftingQueue[i]);
+            StaticDataProvider.craftingQueue.RemoveAt(i);
+        }
+    }
     
 }
