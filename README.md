@@ -9,7 +9,7 @@
 	- minden este random megtámadhatják a bázist és meg kell védeni.
 	- napi 1 portyát lehet lejátszani ahol felfedezed a mapot ami kis pályákból áll és gyűjthetsz cuccokat.
 	- minden nap végén van egy gyűlés ahol döntéseket lehet hozni amik befolyásolják a közösség túlélését.
-		ezek a döntések lehetnek:
+	ezek a döntések lehetnek:
 		- valaki száműzése
 		- ima/beszéd (a fanatikus és az önzetlen emberek között eltolja a balanceot)
 		- random eventek kiértékelése
@@ -25,13 +25,13 @@
 	- az önzetlen oldalon minden emberveszteség nagy morál mínusszal jár legyen az a csapat tagja vagy random túlélő de cserébe a talált túlélők csatlakozhatnak a "nyájadhoz"
 
 ## A csoport hozzáállásának függvényében új lehetőségek nyílnak meg:
-	### Radikális vonalon:
+### Radikális vonalon:
 	- "csak mi számítunk" - más túlélő táborok kifosztása
 	- "A hit majd erőt ad" - karakterek étel és víz fogyasztása csökken debuff nélkül
 	- "A cél szentesíti az eszközt" - talált túlélők új sors opciója: ők a vacsora (kannibalizmus)
 	- "Csak a legerősebbek élik túl" - új esti döntés: a kolónia tagjai közül is fel lehet áldozni valakit kajának
 
-	### Őnzetlen vonalon:
+### Őnzetlen vonalon:
 	- "Egységben az erő" - a csatlakozott túlélők felajánlják a cuccaikat a kolóniának
 	- "öld a holtat mentsd az élőt" - idegen túlélők kisebb eséjjel ellenségesek és a karakterek nem veszítenek morált zombik öléséért
 	- "egy szebb holnapért!" - a karakterek  kapnak egy last stand abilityt: ha a hp 25% alá esik + 50% dmg;
