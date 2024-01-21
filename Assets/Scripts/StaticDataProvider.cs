@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class StaticDataProvider
 {
-    public static int material = 0;     // az erõforrás
+    public static int material = 10;     // az erõforrás
     public static int radicality = 0; // a radikalitást méri, ha negatív akkor az "önzetlen irányba" tartunk
     public static int ammo; // lõszeradagokat mér: 1 küldetés 1 fõnek 1 adag lõszer HA visz magával lõfegyvert 
     public static int food = 12000;   //(kcal) az egyszerûség kedvéért minden ember hogy ne éhezzen default 1000 kcal/ nap fogyaszt
@@ -35,6 +35,7 @@ public static class StaticDataProvider
     "Baxter"
     };
     public static Sprite[] profilePics;
+    public static bool isFirstTime = true;
 
     public static void AddRadicallity(int amount)
     {

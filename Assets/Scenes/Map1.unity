@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 17330733}
   - component: {fileID: 17330732}
   m_Layer: 0
-  m_Name: Square
+  m_Name: ScaleReferenceSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1106,7 +1106,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawn1 (1)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1314,6 +1314,8 @@ MonoBehaviour:
     profilePic: {fileID: 0}
     prefab: {fileID: 0}
     weapon: {fileID: 0}
+    daylyTask: 0
+    story: 
   unit: {fileID: 0}
 --- !u!1 &564892600
 GameObject:
@@ -1587,6 +1589,7 @@ MonoBehaviour:
   attackRange: 2
   minDamage: 20
   maxDamage: 33
+  DELETE: 0
 --- !u!50 &659972166
 Rigidbody2D:
   serializedVersion: 4
@@ -2076,6 +2079,8 @@ MonoBehaviour:
     profilePic: {fileID: 0}
     prefab: {fileID: 0}
     weapon: {fileID: 0}
+    daylyTask: 0
+    story: 
   unit: {fileID: 0}
 --- !u!1 &838450799
 GameObject:
@@ -2537,7 +2542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82753ecff95506845b5f74c3c414d517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 3
+  panSpeed: 0.5
 --- !u!1 &1046836634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,7 +2703,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1074840533}
   - component: {fileID: 1074840534}
-  - component: {fileID: 1074840536}
   m_Layer: 0
   m_Name: MANAGER
   m_TagString: Untagged
@@ -2738,27 +2742,16 @@ MonoBehaviour:
   - {fileID: 655170377}
   - {fileID: 2061773409}
   - {fileID: 564892600}
+  DEFAULTWEAPON: {fileID: 0}
   buttonGroupHolder: {fileID: 50955214}
   selectedUnit: {fileID: 0}
-  unitPrefab: {fileID: 0}
+  unitPrefab: {fileID: 4622341013311461679, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
   unitSpawns:
   - {fileID: 2073046868}
   - {fileID: 471733321}
   - {fileID: 2019846621}
   - {fileID: 1257600786}
   maxTouchLengthBeforeHold: 0.25
---- !u!114 &1074840536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1074840532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5f17fd485e0ff4394781415536b0ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1154107883
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,7 +3182,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawn1 (3)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3690,6 +3683,8 @@ MonoBehaviour:
     profilePic: {fileID: 0}
     prefab: {fileID: 0}
     weapon: {fileID: 0}
+    daylyTask: 0
+    story: 
   unit: {fileID: 0}
 --- !u!1 &1365193676
 GameObject:
@@ -6454,9 +6449,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: RTSUnit
       objectReference: {fileID: 0}
-    - target: {fileID: 6976825027986691856, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
+    - target: {fileID: 4622341013311461679, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8811334624576925748, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6498,14 +6493,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9208267255017439976, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
-      propertyPath: rotationSpeed
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 9208267255017439976, guid: f734c0a57c0c17148abd41b1fb75f3dc, type: 3}
-      propertyPath: myFollower.weapon
-      value: 
-      objectReference: {fileID: 11400000, guid: ad07854c3d436fc499cce69ecdd2b034, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17284,7 +17271,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawn1 (2)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -17441,7 +17428,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawn1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -17649,6 +17636,8 @@ MonoBehaviour:
     profilePic: {fileID: 0}
     prefab: {fileID: 0}
     weapon: {fileID: 0}
+    daylyTask: 0
+    story: 
   unit: {fileID: 2023239137}
 --- !u!1 &2122018434
 GameObject:

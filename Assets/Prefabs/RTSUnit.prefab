@@ -213,12 +213,14 @@ MonoBehaviour:
     dayliRation: 1000
     profilePic: {fileID: 0}
     prefab: {fileID: 0}
-    weapon: {fileID: 0}
+    weapon: {fileID: 11400000, guid: ad07854c3d436fc499cce69ecdd2b034, type: 2}
+    daylyTask: 0
+    story: 
   agent: {fileID: 7929990426426371681}
   mTransform: {fileID: 3778967748121814087}
   targetDestination: {x: 0, y: 0}
   targetEnemyTransform: {fileID: 0}
-  rotationSpeed: 1
+  rotationSpeed: 90
   angleThreshold: 30
   maxChaseDistance: 6
   hasOrder: 0
@@ -226,6 +228,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   animator: {fileID: 7586309839404769407}
+  meleeWeapon: {fileID: 8551704753584841732}
+  rangedWeapon: {fileID: 0}
   sensor: {fileID: 6165281255207235029}
 --- !u!95 &7586309839404769407
 Animator:
@@ -482,11 +486,11 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 99e729d5c891cde46b1f36defe73dbde, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 1.1875, y: 1.1875}
   m_AdaptiveModeThreshold: 0.5

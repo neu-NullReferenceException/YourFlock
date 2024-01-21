@@ -288,7 +288,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 6342440275473367816}
         m_TargetAssemblyTypeName: FollowerListButton, Assembly-CSharp
-        m_MethodName: RefreshPeoplePanelInfo
+        m_MethodName: RefreshRationsPanelInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -330,6 +330,7 @@ MonoBehaviour:
     profilePic: {fileID: 0}
     prefab: {fileID: 0}
     weapon: {fileID: 0}
+    daylyTask: 0
     story: 
 --- !u!1 &3599903492980134299
 GameObject:

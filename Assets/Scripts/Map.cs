@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Map : ScriptableObject
 {
     public string name;
-    public Scene scene;
+    public int sceneBuildIndex;
     [Multiline]
     public string description;
     public Sprite image;

@@ -412,6 +412,7 @@
 "Assets/Scripts/SpecialButton.cs"
 "Assets/Scripts/StaticDataProvider.cs"
 "Assets/Scripts/TriggerSensor.cs"
+"Assets/Scripts/UiSliderStep.cs"
 "Assets/Scripts/Zombie.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"

@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] answerButtons;
 
     public InventoryItem[] allCraftablesInGame;
+    public InventoryItem[] startingItems;
 
     private RandomEvent currentEvent;
     private OutcomeEvent eventToTriggerAfterDialogEnd = new OutcomeEvent();
@@ -29,6 +30,10 @@ public class GameManager : MonoBehaviour
     public GameObject banishCanvasEnd;
     public TextMeshProUGUI banishedFollowerNameText;
     public TextMeshProUGUI banishedFollowerNameTextEnd;
+
+    public GameObject errorWindow;
+    public TextMeshProUGUI errorText;
+
     [Space(5)]
     [Header("Main Screen References")]
     public GameObject peopleCanvas;
@@ -75,7 +80,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI areaNameText;
     [SerializeField] private TextMeshProUGUI areaDescText;
     [SerializeField] private Image mapImage;
-
+    [SerializeField] private GameObject mapDetails;
+    [Header("Resource Display Fields")]
+    [SerializeField] private TextMeshProUGUI materialText;
+    [SerializeField] private TextMeshProUGUI popText;
+    [SerializeField] private TextMeshProUGUI foodText;
+    [SerializeField] private TextMeshProUGUI dayText;
+    [Header("WeaponSelect Panel Fields")]
+    [SerializeField] private Transform weaponListContent;
+    [SerializeField] private GameObject weaponSelectPanelExtraOptions;
+    [SerializeField] private GameObject weaponSelectPanel;
+    [SerializeField] private TextMeshProUGUI weaponSelectText;
+    [SerializeField] private TextMeshProUGUI weaponDescText;
 
 
 
@@ -83,10 +99,23 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         // DEV ONLY
-        if(StaticDataProvider.followers.Count == 0)
+        if (StaticDataProvider.isFirstTime)
         {
-            StaticDataProvider.AddRandomFollower(3);
+            StaticDataProvider.isFirstTime = false;
+            if (StaticDataProvider.followers.Count == 0)
+            {
+                StaticDataProvider.AddRandomFollower(3);
+            }
+
+            foreach (InventoryItem item in startingItems)
+            {
+                StaticDataProvider.inventoryItems.Add(item);
+            }
         }
+        
+        //rationSlider.stepSize
+
+        UpdateResourceMetrics();
     }
 
     public void BeginGame()
@@ -251,6 +280,7 @@ public class GameManager : MonoBehaviour
         sacrificeCanvasEnd.SetActive(true);
         sacrificedFollowerNameTextEnd.text = f.name;
         StaticDataProvider.followers.Remove(f);
+        UpdateResourceMetrics();
     }
 
     public void Banish(Follower f)
@@ -259,6 +289,7 @@ public class GameManager : MonoBehaviour
         banishedFollowerNameTextEnd.text = f.name;
         StaticDataProvider.followers.Remove(f);
         StaticDataProvider.banishedPeople.Add(f);
+        UpdateResourceMetrics();
     }
 
     // ha kiválasztottuk a random eventet ezzel életrehívjuk
@@ -359,6 +390,13 @@ public class GameManager : MonoBehaviour
         extraOptionsInventory.SetActive(true);
     }
 
+    public void RefreshWeaponSelectPanelInfo()
+    {
+        weaponDescText.text = currentItem.description;
+        itemNameText.text = currentItem.name; //+ " " + StaticDataProvider.CountInventoryItem(currentItem) + "x";
+        weaponSelectPanelExtraOptions.SetActive(true);
+    }
+
     public void RefreshTaskCanvas()
     {
         tasksCanvas.SetActive(true);
@@ -398,6 +436,68 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RefreshWeaponSelect()
+    {
+        weaponSelectPanel.SetActive(true);
+
+        Dictionary<string, int> stock = new Dictionary<string, int>();
+        foreach (InventoryItem item in StaticDataProvider.inventoryItems)
+        {
+            if(item.type == ItemType.Weapon)
+            {
+                if (stock.ContainsKey(item.name))
+                {
+                    stock[item.name]++;
+                }
+                else
+                {
+                    stock.Add(item.name, 1);
+                }
+            }
+        }
+        foreach(Follower f in StaticDataProvider.followers)
+        {
+            if(f.weapon != null)
+            {
+                if (stock.ContainsKey(f.weapon.name)) { stock[f.weapon.name]--; }  
+            }
+        }
+
+        //cleanup
+        for (int i = 0; i < weaponListContent.childCount; i++)
+        {
+            Destroy(weaponListContent.GetChild(i).gameObject);
+        }
+
+        foreach (KeyValuePair<string,int> item in stock)
+        {
+            if(item.Value > 0)
+            {
+                //GameObject o = Instantiate(weaponListUIPrefab, weaponListContent);
+                GameObject o = Instantiate(inventoryCanvasItemPrefab, weaponListContent);
+                o.GetComponent<InventoryItemHolder>().Setup(GetFirstInventoryItemFromName(item.Key), item.Value);
+            }
+        }
+    }
+
+    public void SetSelectedWeaponForSelectedFollower()
+    {
+        currentFollower.weapon = currentItem;
+        ClearSelectedInventoryItem();
+        RefreshPeoplePanelInfo();
+    }
+
+    private InventoryItem GetFirstInventoryItemFromName(string name)
+    {
+        foreach (InventoryItem item in StaticDataProvider.inventoryItems)
+        {
+            if(item.name == name)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
 
     public void AssignCurrentToTask(int taskID)
     {
@@ -412,8 +512,10 @@ public class GameManager : MonoBehaviour
                 currentFollower.daylyTask = FollowerTask.Worker;
                 break;
             case FollowerTask.Scout:
-                if(StaticDataProvider.strikeTeam.Count > 5)
+                if (StaticDataProvider.strikeTeam.Count > 4 || currentFollower.weapon == null)
                 {
+                    // valami error windowt ide
+                    ShowErrorWindow("The exploration team can consist of up to 4 people!\nEach member must be armed!");
                     break;
                 }
                 currentFollower.daylyTask = FollowerTask.Scout;
@@ -448,6 +550,7 @@ public class GameManager : MonoBehaviour
         {
             if (rationsCanvas.activeSelf)
             {
+                //extraOptionsRations.SetActive(true);
                 rationSlider.value = f.dayliRation;
                 rationSliderText.text = f.dayliRation + " Kcal";
             }
@@ -457,13 +560,21 @@ public class GameManager : MonoBehaviour
     public void SetSelectedInventoryItem(InventoryItem i)
     {
         currentItem = i;
-        RefreshInventoryPanelInfo();
+        if (inventoryCanvas.activeInHierarchy)
+        {
+            RefreshInventoryPanelInfo();
+        }
+        if (weaponSelectPanel.activeInHierarchy)
+        {
+            RefreshWeaponSelectPanelInfo();
+        }
     }
 
     public void ClearSelectedInventoryItem()
     {
         currentItem = null;
         extraOptionsInventory.SetActive(false);
+        weaponSelectPanelExtraOptions.SetActive(false);
     }
 
     public void ClearSelectedFollower()
@@ -478,6 +589,7 @@ public class GameManager : MonoBehaviour
         mapImage.sprite = currentMap.image;
         areaNameText.text = currentMap.name;
         areaDescText.text = currentMap.description;
+        mapDetails.SetActive(true);
     }
 
     public void SetSelectedMapInfo(Map m)
@@ -516,10 +628,11 @@ public class GameManager : MonoBehaviour
         if(StaticDataProvider.strikeTeam.Count < 1)
         {
             // ide valami error window
+            ShowErrorWindow("The expolarition team is empty!\nYou should assign some 'volunteers'!");
             return;
         }
 
-        SceneManager.LoadScene(currentMap.scene.buildIndex);
+        SceneManager.LoadScene(currentMap.sceneBuildIndex);
     }
 
     public void NextDay()
@@ -531,19 +644,31 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("YOU LOST");
         }
+        CraftAll();
+        UpdateResourceMetrics();
+    }
+
+    public void UpdateResourceMetrics()
+    {
+        materialText.text = StaticDataProvider.material + "";
+        foodText.text = StaticDataProvider.food + " Kcal";
+        popText.text = StaticDataProvider.followers.Count + "";
     }
 
     public void AddToCraftingQeue()
     {
-        if(StaticDataProvider.craftingQueue.Count <= CountOfCrafters())
+        if(StaticDataProvider.craftingQueue.Count >= CountOfCrafters())
         {
             // ide valami error windowt
+            ShowErrorWindow("Not enough assigned workers!\nYou can only carft one item / worker / day.\nYou can assign workers on the task panel.");
+            Debug.Log(CountOfCrafters() + "/" + StaticDataProvider.craftingQueue.Count);
             Debug.Log("Additional supplydepots required!");
             return;
         }
         if (currentItem.cost > StaticDataProvider.material)
         {
             // ide valami error windowt
+            ShowErrorWindow("Not enugh materials!");
             Debug.Log("Not enugh minerals!");
             return;
         }
@@ -553,13 +678,37 @@ public class GameManager : MonoBehaviour
 
     public void CraftAll()
     {
-        for (int i = 0; i < StaticDataProvider.craftingQueue.Count; i++)    // azért nem foreach mer duplikált elemek elõfordulhatnak
+        /*for (int i = 0; i < StaticDataProvider.craftingQueue.Count; i++)    // azért nem foreach mer duplikált elemek elõfordulhatnak
+        {
+            StaticDataProvider.material -= StaticDataProvider.craftingQueue[i].cost;
+
+            StaticDataProvider.inventoryItems.Add(StaticDataProvider.craftingQueue[i]);
+            StaticDataProvider.craftingQueue.RemoveAt(i);
+        }*/
+        int c = StaticDataProvider.craftingQueue.Count;
+        if(c == 0)
+        {
+            return;
+        }
+        if(c > CountOfCrafters())
+        {
+            c = CountOfCrafters();
+        }
+
+        for (int i = 0; i < CountOfCrafters(); i++)    // ha közben valakit kivettünk
         {
             StaticDataProvider.material -= StaticDataProvider.craftingQueue[i].cost;
 
             StaticDataProvider.inventoryItems.Add(StaticDataProvider.craftingQueue[i]);
             StaticDataProvider.craftingQueue.RemoveAt(i);
         }
+        StaticDataProvider.craftingQueue.Clear();
     }
     
+
+    public void ShowErrorWindow(string text)
+    {
+        errorText.text = text;
+        errorWindow.SetActive(true);
+    }
 }

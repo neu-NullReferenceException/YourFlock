@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class RTSManager : MonoBehaviour
 {
     public GameObject[] cmdcButtons; // MAX 4!!!!!!
+    public InventoryItem DEFAULTWEAPON;
     public Transform buttonGroupHolder;
     private int selectedButtonSiblingIndex = -1;
     public RTSUnit selectedUnit;
@@ -23,16 +24,27 @@ public class RTSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //SetupCMDCButtons();
+        SetupCMDCButtons();
     }
 
     public void SetupCMDCButtons()
     {
+        foreach(GameObject o in cmdcButtons)
+        {
+            o.SetActive(false);
+        }
+
         for (int i = 0; i < StaticDataProvider.strikeTeam.Count; i++)
         {
+            if(StaticDataProvider.strikeTeam[i].weapon == null)
+            {
+                StaticDataProvider.strikeTeam[i].weapon = DEFAULTWEAPON;
+            }
+
             cmdcButtons[i].GetComponentInChildren<CMDCButton>().myFollower = StaticDataProvider.strikeTeam[i];
             cmdcButtons[i].GetComponentInChildren<CMDCButton>().Setup();
             cmdcButtons[i].GetComponentInChildren<CMDCButton>().unit = SpawnUnit(i);
+            cmdcButtons[i].SetActive(true);
         }
     }
 
@@ -90,6 +102,7 @@ public class RTSManager : MonoBehaviour
     {
         foreach (GameObject g in cmdcButtons)
         {
+            if (!g.activeInHierarchy) { continue; }
             if(g.transform.GetSiblingIndex() != siblingIndex)
             {
                 g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Deselect");

@@ -18,6 +18,14 @@ public class InventoryItemHolder : MonoBehaviour
 
     }
 
+    public void Setup(InventoryItem i, int count)
+    {
+        myItem = i;
+        itemImage.sprite = i.itemIcon;
+        itemNameText.text = myItem.name + " " + count + "x";
+
+    }
+
     public void SetSelectedInventoryItem()
     {
         GameObject.Find("MANAGER").GetComponent<GameManager>().SetSelectedInventoryItem(myItem);

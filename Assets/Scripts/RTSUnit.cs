@@ -20,6 +20,9 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     public Animator animator;
     private float lastAttackTime;
 
+    public GameObject meleeWeapon;
+    public GameObject rangedWeapon;
+
     public TriggerSensor sensor;
 
     private void Awake()
@@ -42,6 +45,11 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         if (myFollower.weapon.weaponStats.usesAmmo)
         {
             angleThreshold = 5;
+            meleeWeapon.SetActive(false);
+        }
+        else
+        {
+            rangedWeapon.SetActive(true);
         }
     }
 
