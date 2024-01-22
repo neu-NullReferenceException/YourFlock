@@ -43,7 +43,10 @@ public class RTSManager : MonoBehaviour
 
             cmdcButtons[i].GetComponentInChildren<CMDCButton>().myFollower = StaticDataProvider.strikeTeam[i];
             cmdcButtons[i].GetComponentInChildren<CMDCButton>().Setup();
-            cmdcButtons[i].GetComponentInChildren<CMDCButton>().unit = SpawnUnit(i);
+            RTSUnit unit = SpawnUnit(i);
+            unit.myFollower = StaticDataProvider.strikeTeam[i];
+            unit.Setup();
+            cmdcButtons[i].GetComponentInChildren<CMDCButton>().unit = unit;
             cmdcButtons[i].SetActive(true);
         }
     }
@@ -96,7 +99,10 @@ public class RTSManager : MonoBehaviour
         }
     }
 
-
+    public void ShowMiniAlert(string alertText)
+    {
+        //!!
+    }
 
     public void SelectUnit(int siblingIndex)
     {
@@ -123,5 +129,21 @@ public class RTSManager : MonoBehaviour
                 selectedUnit = null;
             }
         }
+    }
+
+    public void LooseUnit(Follower f)
+    {
+        foreach(GameObject g in cmdcButtons)
+        {
+            if(g.GetComponentInChildren<CMDCButton>().myFollower == f)
+            {
+                g.SetActive(false);
+            }
+        }
+        if(selectedUnit.myFollower == f)
+        {
+            selectedUnit = null;
+        }
+        ShowMiniAlert(f.name + " died!");
     }
 }

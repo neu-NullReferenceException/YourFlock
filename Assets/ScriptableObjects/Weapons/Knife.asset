@@ -15,7 +15,8 @@ MonoBehaviour:
   name: Machete
   type: 2
   description: A razor sharp hardened steel dagger can always prove usefull
-  itemIcon: {fileID: 21300000, guid: a2982b50852ab4548beb4b9fc2a69e6a, type: 3}
+  itemIcon: {fileID: -2027714376, guid: adad2101b5303ea4da984332f19ef7ba, type: 3}
+  itemSprite: {fileID: 21300000, guid: a2982b50852ab4548beb4b9fc2a69e6a, type: 3}
   prefab: {fileID: 0}
   cost: 2
   weaponStats:

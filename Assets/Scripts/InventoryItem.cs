@@ -11,7 +11,10 @@ public class InventoryItem : ScriptableObject
     [Multiline]
     public string description;
     public Sprite itemIcon;
+    [Tooltip("Ha image helyére kell bejelyettesíteni példányosítás helyett")]
+    public Sprite itemSprite;
     public GameObject prefab;
+    public AudioClip audio;
 
     public int cost;
     public WeaponStats weaponStats;

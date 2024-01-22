@@ -7,6 +7,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 {
     public Follower myFollower;
     public NavMeshAgent agent;
+    public AudioSource audio;
     [Tooltip("A navigációs tengely offset miatt kell egy holder, ez annak az EGYETLEN gyereke")]
     [SerializeField] private Transform mTransform;
     public Vector2 targetDestination;
@@ -46,11 +47,16 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         {
             angleThreshold = 5;
             meleeWeapon.SetActive(false);
+            rangedWeapon.SetActive(true);
+            rangedWeapon.GetComponent<SpriteRenderer>().sprite = myFollower.weapon.itemSprite;
+            animator.Play("RangedIdle");
         }
         else
         {
-            rangedWeapon.SetActive(true);
+            rangedWeapon.SetActive(false);
+            meleeWeapon.GetComponent<SpriteRenderer>().sprite = myFollower.weapon.itemSprite;
         }
+        audio.clip = myFollower.weapon.audio;
     }
 
     public void MoveTo(Vector2 target)  // CSAK USER INPUTRA HÍVJUK EZT NEM SZABAD FELÜLÍRNIA SEMMILYEN PARANCSNAK
@@ -133,6 +139,11 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         {
             animator.Play("Attack");
         }
+        else
+        {
+            animator.Play("Ranged");
+        }
+        audio.Play();
         lastAttackTime = Time.time;
         targetEnemy.TakeDamage(myFollower.CalculateDamage(), gameObject);
     }
@@ -200,6 +211,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
             StaticDataProvider.DieInConbat(myFollower);
 
             // saját halál logika
+            GameObject.Find("MANAGER").GetComponent<RTSManager>().LooseUnit(myFollower);
             Destroy(gameObject);
         }
 

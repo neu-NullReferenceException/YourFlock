@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Baseballbat
   type: 2
-  description: It will get the job done...
-  itemIcon: {fileID: 21300000, guid: 99e729d5c891cde46b1f36defe73dbde, type: 3}
+  description: A nice wooden basaeballbat for smashing balls (and other stuff)
+  itemIcon: {fileID: 1472503656, guid: adad2101b5303ea4da984332f19ef7ba, type: 3}
+  itemSprite: {fileID: 21300000, guid: 99e729d5c891cde46b1f36defe73dbde, type: 3}
   prefab: {fileID: 0}
   cost: 2
   weaponStats:
