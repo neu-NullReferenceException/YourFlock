@@ -53,6 +53,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         }
         else
         {
+            meleeWeapon.SetActive(true);
             rangedWeapon.SetActive(false);
             meleeWeapon.GetComponent<SpriteRenderer>().sprite = myFollower.weapon.itemSprite;
         }
@@ -141,7 +142,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         }
         else
         {
-            animator.Play("Ranged");
+            animator.Play("RangedAttack");
         }
         audio.Play();
         lastAttackTime = Time.time;
@@ -214,7 +215,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
             GameObject.Find("MANAGER").GetComponent<RTSManager>().LooseUnit(myFollower);
             Destroy(gameObject);
         }
-
+        GameObject.Find("MANAGER").GetComponent<RTSManager>().UpdateUI();
         if (!targetEnemyTransform)
         {
             SelectTaget();
@@ -241,5 +242,10 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
             targetEnemyTransform = targetEnemy.GetObject().transform;
             Debug.Log("TARGET LOCKED: " + targetEnemy.GetObject().name);
         }
+    }
+
+    public void OnTargetKIA()
+    {
+        SelectTaget();
     }
 }

@@ -146,4 +146,16 @@ public class RTSManager : MonoBehaviour
         }
         ShowMiniAlert(f.name + " died!");
     }
+
+    public void UpdateUI()
+    {
+        foreach (GameObject g in cmdcButtons)
+        {
+            if (g.activeInHierarchy)
+            {
+                g.GetComponentInChildren<CMDCButton>().UpdateHealthbar();
+            }
+            
+        }
+    }
 }

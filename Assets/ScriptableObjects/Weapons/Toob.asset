@@ -24,4 +24,4 @@ MonoBehaviour:
     usesAmmo: 1
     range: 15
     attackDelay: 0.2
-    damage: 25
+    damage: 18

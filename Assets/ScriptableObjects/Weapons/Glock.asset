@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Glock
   m_EditorClassIdentifier: 
   name: Glock
-  type: 0
+  type: 2
   description: High quality pistol. Before the collapse, I used to own one...
   itemIcon: {fileID: 1076815132, guid: 3f1dc0ba18445b345a4fae40b4f2645c, type: 3}
   itemSprite: {fileID: 0}

@@ -18,7 +18,6 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
     public int minDamage;
     public int maxDamage;
     // ForceRecompile
-    public int DELETE;
 
     public GameObject GetObject()
     {
@@ -33,7 +32,7 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
     public void TakeDamage(int amount, GameObject sender)
     {
         heath -= amount;
-        if (!isTriggered)
+        if (!isTriggered && targetEnemyTransform != null)
         {
             if(sender.TryGetComponent<IDamagable>(out IDamagable co))
             {
@@ -43,10 +42,14 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
             }
             
         }
-
+        // halál logika 
         if(heath <= 0)
         {
-            // halál logika - most csak töröl
+            if (sender.TryGetComponent<IDamagable>(out IDamagable co))
+            {
+                co.OnTargetKIA();
+            }
+            
             Destroy(gameObject);
         }
     }
@@ -73,6 +76,10 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
             agent.SetDestination(targetEnemyTransform.position);
             TryToAttack();
         }
+        if(agent.velocity.magnitude > 0.01f)
+        {
+            animator.SetBool("Walk", true);
+        }
     }
 
     public void TryToAttack()
@@ -94,5 +101,10 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
             targetEnemyTransform = newEnemy.GetObject().transform;
             isTriggered = true;
         }
+    }
+
+    public void OnTargetKIA()
+    {
+        //throw new System.NotImplementedException();
     }
 }

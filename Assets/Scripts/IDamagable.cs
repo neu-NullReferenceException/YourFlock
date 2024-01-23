@@ -16,4 +16,5 @@ public interface IDamagable
     */
 
     public GameObject GetObject();
+    public void OnTargetKIA();
 }

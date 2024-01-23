@@ -25,8 +25,9 @@ public static class StaticDataProvider
         true,
     };
 
-    public static string[] firstNames = {
-    "Olivia","Zoe","Ava","Sophia","Emma","Mia","Isabella","Ella","Grace","Harper","Abigail","Lily","Chloe","Madison","Anne",
+    public static string[] firstNamesFemale = {
+    "Olivia","Zoe","Ava","Sophia","Emma","Mia","Isabella","Ella","Grace","Harper","Abigail","Lily","Chloe","Madison","Anne", };
+    public static string[] firstNamesMale = {
     "Ethan","Jackson","Joe","Mason","Aiden","Liam","Noah","Lucas","Logan","Owen","Carter","Samuel","Benjamin","Gabriel","Daniel"
     };
     public static string[] lastNames ={
@@ -34,7 +35,8 @@ public static class StaticDataProvider
     "Barnes","Hansen","Gill","Lawson","Fitzgerald","Horton","Montgomery","Walters","Brewer","Barnett","Reeves","Wheeler","Riley","Hudson",
     "Baxter"
     };
-    public static Sprite[] profilePics;
+    public static Sprite[] profilePicsFemale;
+    public static Sprite[] profilePicsMale;
     public static bool isFirstTime = true;
 
     public static void AddRadicallity(int amount)
@@ -74,6 +76,28 @@ public static class StaticDataProvider
                 food = 0;
             }
         }
+    }
+
+    public static List<Follower> CheckStarveToDeath()
+    {
+        List<Follower> fs = new List<Follower>();
+        /*foreach(Follower f in followers)
+        {
+            if(f.food <= 0)
+            {
+                fs.Add(f);
+                DieInConbat(f);
+            }
+        }*/
+        for (int i = 0; i < followers.Count; i++)
+        {
+            if (followers[i].food <= 0)
+            {
+                fs.Add(followers[i]);
+                DieInConbat(followers[i]);
+            }
+        }
+        return fs;
     }
 
     public static void OneTimeCollectiveMentalChange(int amount)
@@ -121,10 +145,29 @@ public static class StaticDataProvider
 
     public static void AddRandomFollower(int number)
     {
+        
+
         for (int i = 0; i < number; i++)
         {
-            string name = firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+            string name;
+            int gender = Random.Range(0, 2); //isMale = 1
+            if(gender == 0)
+            {
+                name = firstNamesFemale[Random.Range(0, firstNamesFemale.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+            }
+            else
+            {
+                name = firstNamesMale[Random.Range(0, firstNamesMale.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+            }
             Follower f = new Follower(name, Random.Range(5, 65));
+            if(gender == 0)
+            {
+                f.profilePic = profilePicsFemale[Random.Range(0, profilePicsFemale.Length)];
+            }
+            else
+            {
+                f.profilePic = profilePicsMale[Random.Range(0, profilePicsMale.Length)];
+            }
             //f.profilePic = profilePics[Random.Range(0, profilePics.Length)];
             followers.Add(f);
         }

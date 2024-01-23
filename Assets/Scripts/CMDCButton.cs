@@ -26,4 +26,9 @@ public class CMDCButton : MonoBehaviour
         nameText.text = myFollower.name;
         weaponImage.sprite = myFollower.weapon.itemIcon;
     }
+
+    public void UpdateHealthbar()
+    {
+        healthbar.value = myFollower.health;
+    }
 }

@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameObject errorWindow;
     public TextMeshProUGUI errorText;
 
+    public StaticDataExtender staticDataExtender;
+
     [Space(5)]
     [Header("Main Screen References")]
     public GameObject peopleCanvas;
@@ -101,6 +103,8 @@ public class GameManager : MonoBehaviour
         // DEV ONLY
         if (StaticDataProvider.isFirstTime)
         {
+            staticDataExtender.InjectData();
+
             StaticDataProvider.isFirstTime = false;
             if (StaticDataProvider.followers.Count == 0)
             {
@@ -639,6 +643,16 @@ public class GameManager : MonoBehaviour
     {
         StaticDataProvider.FeedPopulation();
         StaticDataProvider.daysPassed++;
+        List<Follower> ppl = StaticDataProvider.CheckStarveToDeath();
+        if (ppl.Count > 0)
+        {
+            string outp = "";
+            foreach (Follower item in ppl)
+            {
+                outp += item.name + ", ";
+            }
+            ShowErrorWindow(outp + " starved to death!");
+        }
 
         if(StaticDataProvider.followers.Count == 0)
         {
