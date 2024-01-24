@@ -14,6 +14,8 @@ public class RTSManager : MonoBehaviour
     public GameObject unitPrefab;
     public Transform[] unitSpawns;
     //public LayerMask ignoreLayer;
+    public GameObject miniAlertPrefab;
+    public Transform alertContent;
 
     public float maxTouchLengthBeforeHold = 0.25f;
 
@@ -91,6 +93,7 @@ public class RTSManager : MonoBehaviour
 
     public void HandleUnitInput()
     {
+        // ahoz hogy más objektumokkal lehessen interactolni (pl láda kinyitása a pályán) kéne egy raycast a kamerából e helyett
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended && lastTouchDuration < maxTouchLengthBeforeHold) // && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -101,7 +104,8 @@ public class RTSManager : MonoBehaviour
 
     public void ShowMiniAlert(string alertText)
     {
-        //!!
+        GameObject g = Instantiate(miniAlertPrefab, alertContent);
+        g.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = alertText;
     }
 
     public void SelectUnit(int siblingIndex)

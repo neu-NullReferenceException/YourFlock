@@ -39,6 +39,10 @@ public static class StaticDataProvider
     public static Sprite[] profilePicsMale;
     public static bool isFirstTime = true;
 
+    public static List<Measure> passedLaws = new List<Measure>();
+    public static bool lastStandAbilityUnlocked;
+    public static bool emergencyRationsUnlocked;
+
     public static void AddRadicallity(int amount)
     {
         radicality += amount;
@@ -184,5 +188,22 @@ public static class StaticDataProvider
             }
         }
         return c;
+    }
+
+    public static bool MeasureMeetsRequirement(Measure measure)
+    {
+        if (passedLaws.Contains(measure.conflictsWith))
+        {
+            return false;
+        }
+        if(measure.requiredToUnlock != null)
+        {
+            if (!passedLaws.Contains(measure.requiredToUnlock))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

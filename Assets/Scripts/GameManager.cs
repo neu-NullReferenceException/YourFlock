@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     private Follower currentFollower;
     private InventoryItem currentItem;
     private Map currentMap;
+    private Measure currentMesure;
 
     [Header("People Panel Fields")]
     [SerializeField] private TextMeshProUGUI pplNameText;
@@ -94,7 +95,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject weaponSelectPanel;
     [SerializeField] private TextMeshProUGUI weaponSelectText;
     [SerializeField] private TextMeshProUGUI weaponDescText;
-
+    [Header("Measure Detail Panel Fields")]
+    [SerializeField] private TextMeshProUGUI measureNameText;
+    [SerializeField] private TextMeshProUGUI measureDescText;
+    [SerializeField] private TextMeshProUGUI conflictNameText;
+    [SerializeField] private TextMeshProUGUI requirementNameText;
+    [SerializeField] private GameObject measureDetails;
 
 
     private void Start()
@@ -259,8 +265,13 @@ public class GameManager : MonoBehaviour
         sacrificeButton.currentFollower = f;
         //StaticDataProvider.followers.Remove(f);
     }
-    public void StartSacrificeCurrent()
+    public void StartSacrificeCurrent(Requirement requirement)
     {
+        if (!requirement.IsMet())
+        {
+            ShowErrorWindow("You need to introduce the " + requirement.requiredLaw.name + " measure to do this.");
+            return;
+        }
         sacrificeCanvas.SetActive(true);
         sacrificedFollowerNameText.text = currentFollower.name;
         sacrificeButton.currentFollower = currentFollower;
@@ -272,8 +283,13 @@ public class GameManager : MonoBehaviour
         banishButton.currentFollower = f;
         banishedFollowerNameText.text = f.name;
     }
-    public void StartBanishCurrent()
+    public void StartBanishCurrent(Requirement requirement)
     {
+        if (!requirement.IsMet())
+        {
+            ShowErrorWindow("You need to introduce the " + requirement.requiredLaw.name + " measure to do this.");
+            return;
+        }
         banishCanvas.SetActive(true);
         banishButton.currentFollower = currentFollower;
         banishedFollowerNameText.text = currentFollower.name;
@@ -724,5 +740,60 @@ public class GameManager : MonoBehaviour
     {
         errorText.text = text;
         errorWindow.SetActive(true);
+    }
+
+    public void ShowMeasureDetails(Measure m)
+    {
+        currentMesure = m;
+        measureDetails.SetActive(true);
+        measureNameText.text = m.name;
+        measureDescText.text = m.description;
+        if (m.requiredToUnlock)
+        {
+            requirementNameText.text = m.requiredToUnlock.name;
+        }
+        else
+        {
+            requirementNameText.text = "None";
+        }
+        if (m.conflictsWith)
+        {
+            conflictNameText.text = m.conflictsWith.name;
+        }
+        else
+        {
+            conflictNameText.text = "None";
+        }
+    }
+
+    public void IntroduceMeasure()
+    {
+        //!! VALAMI VIZUÁLIS CUCC KÉNE ENNEK A SZEMLÉLTÉSÉRE HOGY EZT MÁR AKTIVÁLTUK
+        if (StaticDataProvider.passedLaws.Contains(currentMesure))
+        {
+            ShowErrorWindow("This measure or ideology has already been activated!");
+            return;
+        }
+        if (StaticDataProvider.MeasureMeetsRequirement(currentMesure))
+        {
+            StaticDataProvider.passedLaws.Add(currentMesure);
+
+            // kiértékel
+            StaticDataProvider.defaultDeathMentalChange += currentMesure.mentalChangeModifyer;
+            StaticDataProvider.defaultFoodConsumption += currentMesure.consumptionChange;
+            if (currentMesure.lastStandAbilityUnlocked)
+            {
+                StaticDataProvider.lastStandAbilityUnlocked = true;
+            }
+            if (currentMesure.emergencyRationsUnlocked)
+            {
+                StaticDataProvider.emergencyRationsUnlocked = true;
+            }
+            currentMesure = null;
+        }
+        else
+        {
+            ShowErrorWindow("Requirements do not match");
+        }
     }
 }
