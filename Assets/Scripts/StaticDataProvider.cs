@@ -42,6 +42,7 @@ public static class StaticDataProvider
     public static List<Measure> passedLaws = new List<Measure>();
     public static bool lastStandAbilityUnlocked;
     public static bool emergencyRationsUnlocked;
+    public static bool isLawAwailable = true; // 1 per nap
 
     public static void AddRadicallity(int amount)
     {

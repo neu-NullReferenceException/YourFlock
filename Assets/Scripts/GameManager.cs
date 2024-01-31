@@ -675,8 +675,10 @@ public class GameManager : MonoBehaviour
 
     public void NextDay()
     {
+        menuAnimator.Play("NextDay");
         StaticDataProvider.FeedPopulation();
         StaticDataProvider.daysPassed++;
+        StaticDataProvider.isLawAwailable = true;
         List<Follower> ppl = StaticDataProvider.CheckStarveToDeath();
         if (ppl.Count > 0)
         {
@@ -693,6 +695,12 @@ public class GameManager : MonoBehaviour
             Debug.LogError("YOU LOST");
         }
         CraftAll();
+        StartCoroutine(NextDayDelay());
+    }
+
+    IEnumerator NextDayDelay()
+    {
+        yield return new WaitForSeconds(3);
         UpdateResourceMetrics();
     }
 
@@ -794,6 +802,11 @@ public class GameManager : MonoBehaviour
             ShowErrorWindow("This measure or ideology has already been activated!");
             return;
         }
+        if (!StaticDataProvider.isLawAwailable)
+        {
+            ShowErrorWindow("Only one measure per day can be introduced!");
+            return;
+        }
         if (StaticDataProvider.MeasureMeetsRequirement(currentMesure))
         {
             StaticDataProvider.passedLaws.Add(currentMesure);
@@ -804,7 +817,7 @@ public class GameManager : MonoBehaviour
                     item.GetComponent<Outline>().enabled = true;
                 }
             }
-
+            StaticDataProvider.isLawAwailable = false;
             // kiértékel
             StaticDataProvider.defaultDeathMentalChange += currentMesure.mentalChangeModifyer;
             StaticDataProvider.defaultFoodConsumption += currentMesure.consumptionChange;
