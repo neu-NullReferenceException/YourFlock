@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Downtown
   m_EditorClassIdentifier: 
   name: Downtown
-  scene:
-    m_Handle: 0
-  description: Lorem ipsum, dolor sit amet.
+  sceneBuildIndex: 0
+  description: A big city is the perfect death trap in such cases... Mass... Guns...
+    Resources?
+  image: {fileID: 21300000, guid: bc913455cec81f2409aaa3b2ed5a9684, type: 3}

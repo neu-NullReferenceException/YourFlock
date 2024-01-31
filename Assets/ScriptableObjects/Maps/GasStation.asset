@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GasStation
   m_EditorClassIdentifier: 
   name: Gas Station 66
-  scene:
-    m_Handle: 0
+  sceneBuildIndex: 0
   description: What was once a profitable buisness is nothing more today than an
     empty building stairing at the wasteland..
+  image: {fileID: 21300000, guid: d1e35733f446496458c0ac66564eede5, type: 3}
