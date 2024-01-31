@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class RTSManager : MonoBehaviour
 {
@@ -16,6 +20,14 @@ public class RTSManager : MonoBehaviour
     //public LayerMask ignoreLayer;
     public GameObject miniAlertPrefab;
     public Transform alertContent;
+
+    public Transform Chests;
+    public float ChestThiccness;
+    public Canvas ItemDialog;
+    public Image ItemDialogImage;
+    public TextMeshProUGUI ItemDialogText;
+    public TextMeshProUGUI ItemDialogDescription;
+    public InventoryItem[] loot;
 
     public float maxTouchLengthBeforeHold = 0.25f;
 
@@ -94,11 +106,61 @@ public class RTSManager : MonoBehaviour
     public void HandleUnitInput()
     {
         // ahoz hogy más objektumokkal lehessen interactolni (pl láda kinyitása a pályán) kéne egy raycast a kamerából e helyett
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended && lastTouchDuration < maxTouchLengthBeforeHold) // && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended && lastTouchDuration < maxTouchLengthBeforeHold)
         {
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            pos.z = 0;
-            selectedUnit.MoveTo(pos);
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+            touchPosition.z = 0;
+
+            Transform closestChest = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Transform chest in Chests)
+            {
+                float distance = Vector3.Distance(chest.position, touchPosition);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestChest = chest;
+                }
+            }
+
+            if (closestChest != null && closestDistance < ChestThiccness)
+            {
+                selectedUnit.MoveTo(closestChest.position);
+                Debug.Log("Chest");
+                // Ki kell nyitni a chestet ha ott can a character!
+                StartCoroutine(CheckIfReachedDestination(closestChest,selectedUnit.transform));
+            }
+            else
+            {
+                //Debug.Log("No Chest");
+                selectedUnit.MoveTo(touchPosition);
+            }
+        }
+    }
+
+    private IEnumerator CheckIfReachedDestination(Transform Chest, Transform unit)
+    {
+        while (true)
+        {
+            //Debug.Log("Waiting for chest!!!");
+            yield return null;
+            
+            float distanceToChest = Vector2.Distance(new Vector2(unit.position.x, unit.position.y), new Vector2(Chest.position.x, Chest.position.y));
+            //Debug.Log("Player " + unit.position.x + " " + unit.position.y + " " + unit.position.z + " Chest " + Chest.position.x + " " + Chest.position.y + " " + Chest.position.z+" Distance "+distanceToChest);
+            //Debug.Log(distanceToChest);
+            float stoppingDistance = 0.5f;
+
+            if (distanceToChest < stoppingDistance)
+            {
+                if (!Chest.GetComponent<ChestController>().isOpenned)
+                {
+                    Debug.Log("Got to chest!");
+                    Chest.GetComponent<ChestController>().open();
+                    PickRandomUpItem();
+                }
+                break;
+            }
         }
     }
 
@@ -160,6 +222,31 @@ public class RTSManager : MonoBehaviour
                 g.GetComponentInChildren<CMDCButton>().UpdateHealthbar();
             }
             
+        }
+    }
+
+    private void PickRandomUpItem()
+    {
+        int index = UnityEngine.Random.Range(0, loot.Length);
+        InventoryItem chosenLoot = loot[index];
+        if (chosenLoot != null)
+        {
+            if (chosenLoot.type == ItemType.Food)
+            {
+                ItemDialogText.text = chosenLoot.name + " " + chosenLoot.cost + "kcal";
+                ItemDialogDescription.text = chosenLoot.description;
+                StaticDataProvider.food += chosenLoot.cost;
+                ItemDialog.gameObject.SetActive(true);
+                ItemDialogImage.sprite = chosenLoot.itemIcon;
+            }
+            else if (chosenLoot.type == ItemType.Material)
+            {
+                ItemDialogText.text = chosenLoot.name + " " + chosenLoot.cost + "pcs";
+                ItemDialogDescription.text = chosenLoot.description;
+                StaticDataProvider.material += chosenLoot.cost;
+                ItemDialogImage.sprite = chosenLoot.itemIcon;
+                ItemDialog.gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -72,7 +72,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     {
         // target pick logika
         targetEnemy = sensor.NearestEnemy(StaticDataProvider.HostilityMatrix);
-        if(targetEnemy != null)
+        if (targetEnemy != null)
         {
             targetEnemyTransform = targetEnemy.GetObject().transform;
         }
@@ -80,14 +80,14 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     private void Update()
     {
-        if (hasOrder && (!agent.hasPath )) //|| agent.pathStatus == NavMeshPathStatus.PathComplete
+        if (hasOrder && (!agent.hasPath)) //|| agent.pathStatus == NavMeshPathStatus.PathComplete
         {
             hasOrder = false;
             Debug.Log("OrderCompleate!");
         }
         //globalRot = mTransform.rotation;
 
-        if (targetEnemy != null &&  targetEnemyTransform != null)
+        if (targetEnemy != null && targetEnemyTransform != null)
         {
             float d = Vector2.Distance(transform.position, targetEnemyTransform.position);
             if (d > myFollower.weapon.weaponStats.range && d < maxChaseDistance && !hasOrder)
@@ -95,7 +95,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
                 Debug.Log("CHASE");
                 agent.SetDestination(new Vector3(targetEnemyTransform.position.x, targetEnemyTransform.position.y));
             }
-            else if(d <= myFollower.weapon.weaponStats.range)
+            else if (d <= myFollower.weapon.weaponStats.range)
             {
                 TryToAttack();
             }
@@ -114,22 +114,22 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public void TryToAttack()
     {
-        
-        if(Time.time - lastAttackTime >= myFollower.weapon.weaponStats.attackDelay)
+
+        if (Time.time - lastAttackTime >= myFollower.weapon.weaponStats.attackDelay)
         {
             /*if (HasLineOfSight(transform, targetEnemyTransform))
             {*/
-                
-                if (IsFacingAngle(GetLookAngleDifference(targetEnemyTransform)))
-                {
-                    //Debug.Log("TryToAttack");
-                    Attack();
-                }
-                else
-                {
-                    //Debug.Log("Looking at: " + GetLookAngleDifference(targetEnemyTransform));
-                    LookAt(targetEnemyTransform);
-                }
+
+            if (IsFacingAngle(GetLookAngleDifference(targetEnemyTransform)))
+            {
+                //Debug.Log("TryToAttack");
+                Attack();
+            }
+            else
+            {
+                //Debug.Log("Looking at: " + GetLookAngleDifference(targetEnemyTransform));
+                LookAt(targetEnemyTransform);
+            }
             //}
         }
     }
@@ -181,7 +181,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
 
     public void ReturnToIdleRotationLocal()
     {
-        float angle = Mathf.MoveTowardsAngle(mTransform.localRotation.eulerAngles.z, 0, rotationSpeed/2 * Time.deltaTime);
+        float angle = Mathf.MoveTowardsAngle(mTransform.localRotation.eulerAngles.z, 0, rotationSpeed / 2 * Time.deltaTime);
         mTransform.localRotation = Quaternion.Euler(new Vector3(90, 0, angle)); // vagy mégse?
     }
 
@@ -206,7 +206,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
     public void TakeDamage(int amount, GameObject sender)
     {
         myFollower.health -= amount;
-        if(myFollower.health <= 0)
+        if (myFollower.health <= 0)
         {
             // globális feltakarítás és hatásszámolás
             StaticDataProvider.DieInConbat(myFollower);
