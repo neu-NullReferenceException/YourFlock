@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\RTSManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\DialogeChoiseRequirement.cs" />
+    <Compile Include="Assets\Scripts\MeasureHolder.cs" />
     <Compile Include="Assets\Scripts\CMDCButton.cs" />
     <Compile Include="Assets\Scripts\CameraPan.cs" />
     <Compile Include="Assets\Scripts\DialogeElement.cs" />

@@ -41,7 +41,7 @@ public class Follower
         this.name = name;
         this.age = age;
         strength = Random.Range(0, 6);
-        strength = Random.Range(0, 6);
+        perception = Random.Range(0, 6);
     }
 }
 

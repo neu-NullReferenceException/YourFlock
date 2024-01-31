@@ -1054,6 +1054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 587318078}
   - component: {fileID: 587318079}
+  - component: {fileID: 587318080}
   m_Layer: 0
   m_Name: MANAGER
   m_TagString: Untagged
@@ -1096,10 +1097,113 @@ MonoBehaviour:
   - {fileID: 1270790140}
   - {fileID: 792644507}
   - {fileID: 1851906551}
+  allCraftablesInGame: []
+  startingItems: []
   sacrificeCanvas: {fileID: 0}
+  sacrificeCanvasEnd: {fileID: 0}
+  sacrificeButton: {fileID: 0}
   sacrificedFollowerNameText: {fileID: 0}
+  sacrificedFollowerNameTextEnd: {fileID: 0}
   banishCanvas: {fileID: 0}
+  banishButton: {fileID: 0}
+  banishCanvasEnd: {fileID: 0}
   banishedFollowerNameText: {fileID: 0}
+  banishedFollowerNameTextEnd: {fileID: 0}
+  errorWindow: {fileID: 0}
+  errorText: {fileID: 0}
+  staticDataExtender: {fileID: 587318080}
+  peopleCanvas: {fileID: 0}
+  rationsCanvas: {fileID: 0}
+  measuresCanvas: {fileID: 0}
+  inventoryCanvas: {fileID: 0}
+  tasksCanvas: {fileID: 0}
+  peopleCanvasItemPrefab: {fileID: 0}
+  rationsCanvasItemPrefab: {fileID: 0}
+  inventoryCanvasItemPrefab: {fileID: 0}
+  tasksCanvasItemPrefab: {fileID: 0}
+  peopleCanvasContent: {fileID: 0}
+  rationsCanvasContent: {fileID: 0}
+  inventoryCanvasContent: {fileID: 0}
+  pplNameText: {fileID: 0}
+  pplStoryText: {fileID: 0}
+  weaponImage: {fileID: 0}
+  extraOptions: {fileID: 0}
+  totalConsumptionText: {fileID: 0}
+  rationSlider: {fileID: 0}
+  rationSliderText: {fileID: 0}
+  extraOptionsRations: {fileID: 0}
+  costText: {fileID: 0}
+  itemNameText: {fileID: 0}
+  descText: {fileID: 0}
+  extraOptionsInventory: {fileID: 0}
+  idleContent: {fileID: 0}
+  workContent: {fileID: 0}
+  scoutContent: {fileID: 0}
+  areaNameText: {fileID: 0}
+  areaDescText: {fileID: 0}
+  mapImage: {fileID: 0}
+  mapDetails: {fileID: 0}
+  materialText: {fileID: 0}
+  popText: {fileID: 0}
+  foodText: {fileID: 0}
+  dayText: {fileID: 0}
+  weaponListContent: {fileID: 0}
+  weaponSelectPanelExtraOptions: {fileID: 0}
+  weaponSelectPanel: {fileID: 0}
+  weaponSelectText: {fileID: 0}
+  weaponDescText: {fileID: 0}
+  measureNameText: {fileID: 0}
+  measureDescText: {fileID: 0}
+  conflictNameText: {fileID: 0}
+  requirementNameText: {fileID: 0}
+  measureDetails: {fileID: 0}
+  measureRepresenterButtons: []
+--- !u!114 &587318080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587318077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98075d1104a620c48af895934aaf4338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  femalePorfilePics:
+  - {fileID: 21300000, guid: 0d1f5d2824b7c4a45b351477d3d8eec9, type: 3}
+  - {fileID: 21300000, guid: 977041659ac80cb43b9cdca81e944e36, type: 3}
+  - {fileID: 21300000, guid: a803a4e2ddb1e2549a80ca6feb05121d, type: 3}
+  - {fileID: 21300000, guid: c9f9d359967f717439369d938a8a485c, type: 3}
+  - {fileID: 21300000, guid: cc1901483bda72249b340525afca0133, type: 3}
+  - {fileID: 21300000, guid: b7280c7f73edb7f43b6bf7854df011ce, type: 3}
+  - {fileID: 21300000, guid: 9c29444cfb2e30d4db98cf82f052ba07, type: 3}
+  - {fileID: 21300000, guid: 95ec0be875fb24b4999bca0a0e9a5a2d, type: 3}
+  - {fileID: 21300000, guid: eabaa43b355132d408edbb766303f98c, type: 3}
+  - {fileID: 21300000, guid: c454e999477bd764abdbe01086c8ba61, type: 3}
+  - {fileID: 21300000, guid: 9cc5e17c222770244812cb3763e5d41e, type: 3}
+  - {fileID: 21300000, guid: c69c0a5fe58ed804bb1a286979b7b1e2, type: 3}
+  - {fileID: 21300000, guid: 14d93f4933c92a14796ec2d8a6cefa9e, type: 3}
+  - {fileID: 21300000, guid: 5c0d947914bdb7341be79e96fe1180d1, type: 3}
+  - {fileID: 21300000, guid: e426c1b3fbe6d114eb1605e3f653415d, type: 3}
+  - {fileID: 21300000, guid: 8f54c4469fc402e448ce38c5aed4dbc7, type: 3}
+  malePorfilePics:
+  - {fileID: 21300000, guid: 28d79bad699b8f84c88ff92a09078168, type: 3}
+  - {fileID: 21300000, guid: 86997cb3c7f13db45b6101e75af9bea3, type: 3}
+  - {fileID: 21300000, guid: 0ef9c479f987fed489ab2031bb31089c, type: 3}
+  - {fileID: 21300000, guid: 22370f8b5f7fb054595fac09426344b6, type: 3}
+  - {fileID: 21300000, guid: f1bfd7553adc79749b301c6540bdde36, type: 3}
+  - {fileID: 21300000, guid: c1fcb6d39b7a6a64e94e55dfb6f7419b, type: 3}
+  - {fileID: 21300000, guid: 52f4e1ff43ac5264ab8bc1a1a74d4752, type: 3}
+  - {fileID: 21300000, guid: 5c462ac8e29da4142b5aa42f25d97fd6, type: 3}
+  - {fileID: 21300000, guid: 5f4014fbf9bc1334aa3e192b307a2968, type: 3}
+  - {fileID: 21300000, guid: 7fdd7180e2b542344b5e2c76f90ddbd5, type: 3}
+  - {fileID: 21300000, guid: 32aa2c709e150c3478ffc7ac1329c892, type: 3}
+  - {fileID: 21300000, guid: f377fe5c7b9d5b6479dbfff215897dbf, type: 3}
+  - {fileID: 21300000, guid: fa80472d06b921b4aa40093f5ae59dbb, type: 3}
+  - {fileID: 21300000, guid: 2d0ac0f6332f01d46b81c41bfd2e92ca, type: 3}
+  - {fileID: 21300000, guid: 69dab1dcae4d5844a9471352a3a6975b, type: 3}
+  - {fileID: 21300000, guid: 494eccc68271813418ee9c2079f04035, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

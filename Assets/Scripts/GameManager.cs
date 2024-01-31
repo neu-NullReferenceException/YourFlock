@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI requirementNameText;
     [SerializeField] private GameObject measureDetails;
 
+    public GameObject[] measureRepresenterButtons;
 
     private void Start()
     {
@@ -343,7 +344,7 @@ public class GameManager : MonoBehaviour
     public void RefreshPeoplePanelInfo()
     {
         pplNameText.text = currentFollower.name;
-        pplStoryText.text = currentFollower.story;
+        pplStoryText.text = "Stats:\nStrength: " + currentFollower.strength + "\nPerception: " + currentFollower.perception + "";
         if (currentFollower.weapon != null)
         {
             weaponImage.gameObject.SetActive(true);
@@ -683,6 +684,7 @@ public class GameManager : MonoBehaviour
         materialText.text = StaticDataProvider.material + "";
         foodText.text = StaticDataProvider.food + " Kcal";
         popText.text = StaticDataProvider.followers.Count + "";
+        dayText.text = StaticDataProvider.daysPassed + "";
     }
 
     public void AddToCraftingQeue()
@@ -777,6 +779,13 @@ public class GameManager : MonoBehaviour
         if (StaticDataProvider.MeasureMeetsRequirement(currentMesure))
         {
             StaticDataProvider.passedLaws.Add(currentMesure);
+            foreach (GameObject item in measureRepresenterButtons)
+            {
+                if(item.GetComponent<MeasureHolder>().measure == currentMesure)
+                {
+                    item.GetComponent<Outline>().enabled = true;
+                }
+            }
 
             // kiértékel
             StaticDataProvider.defaultDeathMentalChange += currentMesure.mentalChangeModifyer;
