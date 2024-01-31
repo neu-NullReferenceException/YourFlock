@@ -383,6 +383,7 @@ MonoBehaviour:
   attackRange: 2
   minDamage: 20
   maxDamage: 33
+  ragdoll: {fileID: 7379343536491364431, guid: 6fbd45d74ee58484fa56af59015c19c2, type: 3}
 --- !u!50 &7964025686828638314
 Rigidbody2D:
   serializedVersion: 4

@@ -17,7 +17,8 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
     public float attackRange = 1;
     public int minDamage;
     public int maxDamage;
-    // ForceRecompile
+
+    public GameObject ragdoll;
 
     public GameObject GetObject()
     {
@@ -49,7 +50,8 @@ public class Zombie : MonoBehaviour, IDamagable, ITriggerable
             {
                 co.OnTargetKIA();
             }
-            
+
+            Instantiate(ragdoll, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
