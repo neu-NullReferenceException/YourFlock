@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI errorText;
 
     public StaticDataExtender staticDataExtender;
+    public Animator menuAnimator;
 
     [Space(5)]
     [Header("Main Screen References")]
@@ -131,11 +132,12 @@ public class GameManager : MonoBehaviour
 
     public void BeginGame()
     {
+        menuAnimator.Play("ToWhite");
         StartCoroutine(DelayedSceneLoad());
     }
     IEnumerator DelayedSceneLoad()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
         SceneManager.LoadScene(1);
     }
 
@@ -214,11 +216,26 @@ public class GameManager : MonoBehaviour
         ClearAnswerButtons();
 
         dialogText.text = "";
-        for (int i = 0; i < dialogeElement.dialogText.Length; i++)
+        int l = 0;
+        while (l < dialogeElement.dialogText.Length)
+        {
+            if (Input.touchCount > 0)
+            {
+                if(Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    break;
+                }
+                
+            }
+            dialogText.text += dialogeElement.dialogText[l];
+            l++;
+            yield return null;
+        }
+        /*for (int i = 0; i < dialogeElement.dialogText.Length; i++)
         {
             dialogText.text += dialogeElement.dialogText[i];
             yield return null;
-        }
+        }*/
         dialogText.text = dialogeElement.dialogText;
 
 
@@ -681,6 +698,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateResourceMetrics()
     {
+        if (!materialText) { return; }
         materialText.text = StaticDataProvider.material + "";
         foodText.text = StaticDataProvider.food + " Kcal";
         popText.text = StaticDataProvider.followers.Count + "";
