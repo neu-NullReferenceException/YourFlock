@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map1.unity
     guid: 17c84200ab8fa2d43a1a960d5bd63631
+  - enabled: 1
+    path: Assets/Scenes/AbandonedSupermarket.unity
+    guid: bc63f9659ccc294489e0ba3294a183c8
+  - enabled: 1
+    path: Assets/Scenes/Hospital.unity
+    guid: 4c90fd72d70b0d5449b54601111b3a2f
+  - enabled: 1
+    path: Assets/Scenes/QuarantineZone.unity
+    guid: 15516ab69eda6cf4da7412096af9cbc2
+  - enabled: 1
+    path: Assets/Scenes/GasStation.unity
+    guid: 391a5459ffb99404d8201ad845e64537
   m_configObjects: {}

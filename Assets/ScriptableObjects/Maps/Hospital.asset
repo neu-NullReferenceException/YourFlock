@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Hospital
   m_EditorClassIdentifier: 
   name: St. Joe Hospital
-  sceneBuildIndex: 0
+  sceneBuildIndex: 4
   description: 'Survivors Rule 1: NEVER go even near to hospitals'
   image: {fileID: 21300000, guid: fa0ee9a6407cda14cb88502e7c04e9f6, type: 3}
