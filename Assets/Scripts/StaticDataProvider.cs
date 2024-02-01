@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
+using System.Reflection;
 
 [Serializable]
 public static class StaticDataProvider
@@ -153,7 +155,7 @@ public static class StaticDataProvider
 
     public static void AddRandomFollower(int number)
     {
-        
+        //StaticDataProvider.saveGame("");
 
         for (int i = 0; i < number; i++)
         {
@@ -209,5 +211,21 @@ public static class StaticDataProvider
         }
 
         return true;
+    }
+
+    public static void saveGame(String filename)
+    {
+        BindingFlags bindingFlags = BindingFlags.Public |
+                                    BindingFlags.NonPublic |
+                                    BindingFlags.Instance |
+                                    BindingFlags.Static;
+
+        FieldInfo[] fields = typeof(StaticDataProvider).GetFields(bindingFlags);
+
+        foreach (FieldInfo field in fields)
+        {
+            object value = field.GetValue(null);
+            Debug.Log($"{field.Name}: {value}");
+        }
     }
 }
