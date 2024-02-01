@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public static class StaticDataProvider
 {
     public static int material = 10;     // az erõforrás
@@ -156,23 +158,23 @@ public static class StaticDataProvider
         for (int i = 0; i < number; i++)
         {
             string name;
-            int gender = Random.Range(0, 2); //isMale = 1
+            int gender = UnityEngine.Random.Range(0, 2); //isMale = 1
             if(gender == 0)
             {
-                name = firstNamesFemale[Random.Range(0, firstNamesFemale.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+                name = firstNamesFemale[UnityEngine.Random.Range(0, firstNamesFemale.Length)] + " " + lastNames[UnityEngine.Random.Range(0, lastNames.Length)];
             }
             else
             {
-                name = firstNamesMale[Random.Range(0, firstNamesMale.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+                name = firstNamesMale[UnityEngine.Random.Range(0, firstNamesMale.Length)] + " " + lastNames[UnityEngine.Random.Range(0, lastNames.Length)];
             }
-            Follower f = new Follower(name, Random.Range(5, 65));
+            Follower f = new Follower(name, UnityEngine.Random.Range(5, 65));
             if(gender == 0)
             {
-                f.profilePic = profilePicsFemale[Random.Range(0, profilePicsFemale.Length)];
+                f.profilePic = profilePicsFemale[UnityEngine.Random.Range(0, profilePicsFemale.Length)];
             }
             else
             {
-                f.profilePic = profilePicsMale[Random.Range(0, profilePicsMale.Length)];
+                f.profilePic = profilePicsMale[UnityEngine.Random.Range(0, profilePicsMale.Length)];
             }
             //f.profilePic = profilePics[Random.Range(0, profilePics.Length)];
             followers.Add(f);

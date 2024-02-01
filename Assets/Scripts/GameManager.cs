@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     private InventoryItem currentItem;
     private Map currentMap;
     private Measure currentMesure;
+    private bool nextDayFlag = false;
 
     [Header("People Panel Fields")]
     [SerializeField] private TextMeshProUGUI pplNameText;
@@ -679,6 +680,8 @@ public class GameManager : MonoBehaviour
 
     public void NextDay()
     {
+        if (nextDayFlag) { return; }
+        nextDayFlag = true;
         menuAnimator.Play("NextDay");
         StaticDataProvider.FeedPopulation();
         StaticDataProvider.daysPassed++;
@@ -707,6 +710,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         UpdateResourceMetrics();
+        yield return new WaitForSeconds(1);
+        nextDayFlag = false;
     }
 
     public void UpdateResourceMetrics()
