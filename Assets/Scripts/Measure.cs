@@ -16,4 +16,5 @@ public class Measure : ScriptableObject
     public bool lastStandAbilityUnlocked;
     public bool emergencyRationsUnlocked;
     public int mentalChangeModifyer;
+    public InventoryItem providedRecipe;
 }
