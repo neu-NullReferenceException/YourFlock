@@ -65,6 +65,7 @@ public class RTSUnit : MonoBehaviour, IDamagable, ITriggerable
         hasOrder = true;
         Debug.Log("OrderGiven");
         targetDestination = target;
+
         agent.SetDestination(new Vector3(targetDestination.x, targetDestination.y));
     }
 

@@ -4189,6 +4189,7 @@ MonoBehaviour:
   - {fileID: 1257600786}
   miniAlertPrefab: {fileID: 8219464090779284189, guid: 86706a46fd749fd45bf88ca9524e0f8f, type: 3}
   alertContent: {fileID: 1916719177}
+  SelectedUnitMarkerPrefab: {fileID: 8824819572799837689, guid: 90a0f0d0d539b2541a9c1b4ccf175a89, type: 3}
   Chests: {fileID: 470333256}
   ChestThiccness: 1
   ItemDialog: {fileID: 397043306}
