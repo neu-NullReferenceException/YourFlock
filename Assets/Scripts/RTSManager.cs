@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,7 +20,6 @@ public class RTSManager : MonoBehaviour
     //public LayerMask ignoreLayer;
     public GameObject miniAlertPrefab;
     public Transform alertContent;
-    public GameObject SelectedUnitMarkerPrefab;
 
     public Transform Chests;
     public float ChestThiccness;
@@ -181,10 +179,6 @@ public class RTSManager : MonoBehaviour
             {
                 g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Deselect");
                 g.transform.GetChild(0).GetComponent<Animator>().ResetTrigger("Select");
-                while (selectedUnit.transform.Find("UnitSelected(Clone)") != null)
-                {
-                    Destroy(selectedUnit.transform.Find("UnitSelected(Clone)").gameObject);
-                }
             }
             else if(siblingIndex != selectedButtonSiblingIndex)
             {
@@ -192,18 +186,11 @@ public class RTSManager : MonoBehaviour
                 g.transform.GetChild(0).GetComponent<Animator>().ResetTrigger("Deselect");
                 selectedButtonSiblingIndex = siblingIndex;
                 selectedUnit = g.transform.GetComponentInChildren<CMDCButton>().unit;
-                GameObject SelectedUnitMarker = Instantiate(SelectedUnitMarkerPrefab) as GameObject;
-                SelectedUnitMarker.transform.position = selectedUnit.gameObject.transform.position;
-                SelectedUnitMarker.transform.SetParent(selectedUnit.gameObject.transform);
             }
             else
             {
                 g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Deselect");
                 g.transform.GetChild(0).GetComponent<Animator>().ResetTrigger("Select");
-                while (selectedUnit.transform.Find("UnitSelected(Clone)") != null)
-                {
-                    Destroy(selectedUnit.transform.Find("UnitSelected(Clone)").gameObject);
-                }
                 selectedButtonSiblingIndex = -1;
                 selectedUnit = null;
             }
