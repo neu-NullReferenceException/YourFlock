@@ -26,7 +26,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GasStation.unity
     guid: 391a5459ffb99404d8201ad845e64537
-  - enabled: 1
-    path: Assets/Scenes/LooseScene.unity
-    guid: 90fb966e2f357b64fbcc70d821825c59
   m_configObjects: {}

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public GameObject[] answerButtons;
 
-    public List<InventoryItem> allCraftablesInGame = new List<InventoryItem>();
+    public InventoryItem[] allCraftablesInGame;
     public InventoryItem[] startingItems;
 
     private RandomEvent currentEvent;
@@ -104,7 +104,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject measureDetails;
 
     public GameObject[] measureRepresenterButtons;
-    public InventoryItem sawdustMeal;
 
     private void Start()
     {
@@ -125,10 +124,7 @@ public class GameManager : MonoBehaviour
                 StaticDataProvider.inventoryItems.Add(item);
             }
         }
-        if (StaticDataProvider.foodRecipe)
-        {
-            allCraftablesInGame.Add(StaticDataProvider.foodRecipe);
-        }
+        
         //rationSlider.stepSize
 
         UpdateResourceMetrics();
@@ -696,8 +692,7 @@ public class GameManager : MonoBehaviour
 
         if(StaticDataProvider.followers.Count == 0)
         {
-            Debug.Log("YOU LOST");
-            SceneManager.LoadScene(7);
+            Debug.LogError("YOU LOST");
         }
         CraftAll();
         StartCoroutine(NextDayDelay());
@@ -761,14 +756,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < CountOfCrafters(); i++)    // ha közben valakit kivettünk
         {
             StaticDataProvider.material -= StaticDataProvider.craftingQueue[i].cost;
-            if(StaticDataProvider.craftingQueue[i] == sawdustMeal)
-            {
-                StaticDataProvider.AddFood(1000);
-            }
-            else
-            {
-                StaticDataProvider.inventoryItems.Add(StaticDataProvider.craftingQueue[i]);
-            }
+
+            StaticDataProvider.inventoryItems.Add(StaticDataProvider.craftingQueue[i]);
             StaticDataProvider.craftingQueue.RemoveAt(i);
         }
         StaticDataProvider.craftingQueue.Clear();
@@ -832,11 +821,6 @@ public class GameManager : MonoBehaviour
             // kiértékel
             StaticDataProvider.defaultDeathMentalChange += currentMesure.mentalChangeModifyer;
             StaticDataProvider.defaultFoodConsumption += currentMesure.consumptionChange;
-            if (currentMesure.providedRecipe)
-            {
-                StaticDataProvider.foodRecipe = currentMesure.providedRecipe;
-                allCraftablesInGame.Add(currentMesure.providedRecipe);
-            }
             if (currentMesure.lastStandAbilityUnlocked)
             {
                 StaticDataProvider.lastStandAbilityUnlocked = true;
@@ -850,20 +834,6 @@ public class GameManager : MonoBehaviour
         else
         {
             ShowErrorWindow("Requirements do not match");
-        }
-    }
-
-    public void RefreshMeasurePanel()
-    {
-        foreach (Measure item in StaticDataProvider.passedLaws) 
-        {
-            foreach (GameObject g in measureRepresenterButtons)
-            {
-                if (g.GetComponent<MeasureHolder>().measure == item)
-                {
-                    g.GetComponent<Outline>().enabled = true;
-                }
-            }
         }
     }
 }

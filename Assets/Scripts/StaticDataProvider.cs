@@ -43,7 +43,6 @@ public static class StaticDataProvider
     public static bool lastStandAbilityUnlocked;
     public static bool emergencyRationsUnlocked;
     public static bool isLawAwailable = true; // 1 per nap
-    public static InventoryItem foodRecipe;
 
     public static void AddRadicallity(int amount)
     {
