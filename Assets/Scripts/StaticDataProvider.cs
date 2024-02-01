@@ -48,6 +48,9 @@ public static class StaticDataProvider
     public static bool emergencyRationsUnlocked;
     public static bool isLawAwailable = true; // 1 per nap
     public static InventoryItem foodRecipe;
+    public static float musicVolume = 1f;
+
+    //UNSAVED STUFF
 
     public static void AddRadicallity(int amount)
     {
@@ -213,7 +216,7 @@ public static class StaticDataProvider
 
     public static void saveGame()
     {
-        DinamicData dd = new DinamicData(material,radicality,ammo,food,daysPassed,defaultFoodConsumption,defaultDeathMentalChange,defaultDaylyRadicalityChange,inventoryItems,craftingQueue,followers,banishedPeople,strikeTeam,HostilityMatrix,passedLaws);
+        DinamicData dd = new DinamicData(material,radicality,ammo,food,daysPassed,defaultFoodConsumption,defaultDeathMentalChange,defaultDaylyRadicalityChange,inventoryItems,craftingQueue,followers,banishedPeople,strikeTeam,HostilityMatrix,passedLaws,musicVolume,lastStandAbilityUnlocked, emergencyRationsUnlocked);
         Debug.Log("Made non-static class!");
         SaveLoader.Save(dd,"gameState.nre");
         Debug.Log("Saved game!");
@@ -240,6 +243,9 @@ public static class StaticDataProvider
         strikeTeam = dd.strikeTeam;
         HostilityMatrix = dd.HostilityMatrix;
         passedLaws = dd.passedLaws;
+        musicVolume = dd.musicVolume;
+        emergencyRationsUnlocked = dd.emergencyRationsUnlocked;
+        lastStandAbilityUnlocked = dd.lastStandAbilityUnlocked;
         dd = null;
         Debug.Log("Done loading!");
     }

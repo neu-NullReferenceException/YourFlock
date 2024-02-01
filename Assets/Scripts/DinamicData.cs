@@ -29,11 +29,12 @@ public class DinamicData : MonoBehaviour
     public bool lastStandAbilityUnlocked;
     public bool emergencyRationsUnlocked;
     public bool isLawAvailable = true;
+    public float musicVolume = 1f;
 
     public DinamicData(int initialMaterial, int initialRadicality, int initialAmmo, int initialFood, int initialDaysPassed,
         int initialFoodConsumption, int initialMentalChange, int initialDaylyRadicalityChange, List<InventoryItem> initialInventoryItems,
         List<InventoryItem> initialCraftingQueue, List<Follower> initialFollowers, List<Follower> initialBanishedPeople, List<Follower> initialStriketeam,
-        bool[] initialHostilityMatrix, List<Measure> initialPassedLaws)
+        bool[] initialHostilityMatrix, List<Measure> initialPassedLaws, float initialMusicVolume, bool initialLastStandState, bool initialEmergencyRationsState)
     {
         material = initialMaterial;
         radicality = initialRadicality;
@@ -55,9 +56,10 @@ public class DinamicData : MonoBehaviour
         passedLaws = initialPassedLaws;
 
         // Initialize other boolean variables
-        lastStandAbilityUnlocked = false;
-        emergencyRationsUnlocked = false;
+        lastStandAbilityUnlocked = initialLastStandState;
+        emergencyRationsUnlocked = initialEmergencyRationsState;
         isLawAvailable = true;
+        musicVolume = initialMusicVolume;
     }
 
     public DinamicData() { }

@@ -104,8 +104,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI requirementNameText;
     [SerializeField] private GameObject measureDetails;
 
+    [Header("Other Stuff")]
     public GameObject[] measureRepresenterButtons;
     public InventoryItem sawdustMeal;
+    public AudioSource musicAudio;
 
     private void Start()
     {
@@ -137,6 +139,7 @@ public class GameManager : MonoBehaviour
             StaticDataProvider.loadGame();
         }
         UpdateResourceMetrics();
+        SetStaticAudioLevel();
     }
 
     public void BeginGame()
@@ -874,6 +877,28 @@ public class GameManager : MonoBehaviour
                     g.GetComponent<Outline>().enabled = true;
                 }
             }
+        }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void SetAudioLevel(Slider f)
+    {
+        StaticDataProvider.musicVolume = f.value;
+        if (musicAudio)
+        {
+            musicAudio.volume = f.value;
+        }
+    }
+
+    public void SetStaticAudioLevel()
+    {
+        if (musicAudio)
+        {
+            musicAudio.volume = StaticDataProvider.musicVolume;
         }
     }
 }
