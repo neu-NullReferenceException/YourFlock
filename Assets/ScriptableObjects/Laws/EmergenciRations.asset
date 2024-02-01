@@ -19,3 +19,8 @@ MonoBehaviour:
   requiredToUnlock: {fileID: 0}
   conflictsWith: {fileID: 0}
   radicalityChange: 0
+  consumptionChange: 0
+  lastStandAbilityUnlocked: 0
+  emergencyRationsUnlocked: 0
+  mentalChangeModifyer: 0
+  providedRecipe: {fileID: 11400000, guid: 24718cff71788714e8a6d6fa0ee5b617, type: 2}

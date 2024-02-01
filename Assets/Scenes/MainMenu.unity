@@ -2108,7 +2108,9 @@ MonoBehaviour:
   - {fileID: 792644507}
   - {fileID: 1851906551}
   allCraftablesInGame: []
-  startingItems: []
+  startingItems:
+  - {fileID: 11400000, guid: ad07854c3d436fc499cce69ecdd2b034, type: 2}
+  - {fileID: 11400000, guid: 6dbfc9be61399c14b9b75fbfccafc523, type: 2}
   sacrificeCanvas: {fileID: 0}
   sacrificeCanvasEnd: {fileID: 0}
   sacrificeButton: {fileID: 0}
