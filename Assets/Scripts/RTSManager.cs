@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RTSManager : MonoBehaviour
 {
@@ -211,6 +212,25 @@ public class RTSManager : MonoBehaviour
             selectedUnit = null;
         }
         ShowMiniAlert(f.name + " died!");
+        if (StaticDataProvider.strikeTeam.Contains(f))
+        {
+            StaticDataProvider.strikeTeam.Remove(f);
+        }
+
+        if (!CheckFollowerAlive())
+        {
+            SceneManager.LoadScene(1);
+        }
+    }
+
+    public bool CheckFollowerAlive()
+    {
+        if(StaticDataProvider.strikeTeam.Count > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void UpdateUI()
