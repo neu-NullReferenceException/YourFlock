@@ -155,8 +155,6 @@ public static class StaticDataProvider
 
     public static void AddRandomFollower(int number)
     {
-        //StaticDataProvider.saveGame("");
-
         for (int i = 0; i < number; i++)
         {
             string name;
@@ -213,19 +211,36 @@ public static class StaticDataProvider
         return true;
     }
 
-    public static void saveGame(String filename)
+    public static void saveGame()
     {
-        BindingFlags bindingFlags = BindingFlags.Public |
-                                    BindingFlags.NonPublic |
-                                    BindingFlags.Instance |
-                                    BindingFlags.Static;
+        DinamicData dd = new DinamicData(material,radicality,ammo,food,daysPassed,defaultFoodConsumption,defaultDeathMentalChange,defaultDaylyRadicalityChange,inventoryItems,craftingQueue,followers,banishedPeople,strikeTeam,HostilityMatrix,passedLaws);
+        Debug.Log("Made non-static class!");
+        SaveLoader.Save(dd,"gameState.nre");
+        Debug.Log("Saved game!");
+    }
 
-        FieldInfo[] fields = typeof(StaticDataProvider).GetFields(bindingFlags);
-
-        foreach (FieldInfo field in fields)
-        {
-            object value = field.GetValue(null);
-            Debug.Log($"{field.Name}: {value}");
-        }
+    public static void loadGame()
+    {
+        Debug.Log("Making empty non-static");
+        DinamicData dd = new DinamicData();
+        Debug.Log("Loading");
+        dd = (DinamicData) SaveLoader.Load(dd,"gameState.nre");
+        material = dd.material;
+        radicality = dd.radicality;
+        ammo = dd.ammo;
+        food = dd.food;
+        daysPassed = dd.daysPassed;
+        defaultFoodConsumption = dd.defaultFoodConsumption;
+        defaultDeathMentalChange = dd.defaultDeathMentalChange;
+        defaultDaylyRadicalityChange = dd.defaultDaylyRadicalityChange;
+        inventoryItems = dd.inventoryItems;
+        craftingQueue = dd.craftingQueue;
+        followers = dd.followers;
+        banishedPeople = dd.banishedPeople;
+        strikeTeam = dd.strikeTeam;
+        HostilityMatrix = dd.HostilityMatrix;
+        passedLaws = dd.passedLaws;
+        dd = null;
+        Debug.Log("Done loading!");
     }
 }

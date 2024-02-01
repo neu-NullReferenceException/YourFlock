@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = 60;
+        
         // DEV ONLY
         if (StaticDataProvider.isFirstTime)
         {
@@ -131,7 +132,10 @@ public class GameManager : MonoBehaviour
             allCraftablesInGame.Add(StaticDataProvider.foodRecipe);
         }
         //rationSlider.stepSize
-
+        if (SaveLoader.isSaveFile(new DinamicData(),"gameState.nre"))
+        {
+            StaticDataProvider.loadGame();
+        }
         UpdateResourceMetrics();
     }
 
@@ -704,6 +708,7 @@ public class GameManager : MonoBehaviour
         }
         CraftAll();
         StartCoroutine(NextDayDelay());
+        StaticDataProvider.saveGame();
     }
 
     IEnumerator NextDayDelay()

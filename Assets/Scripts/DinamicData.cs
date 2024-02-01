@@ -59,4 +59,6 @@ public class DinamicData : MonoBehaviour
         emergencyRationsUnlocked = false;
         isLawAvailable = true;
     }
+
+    public DinamicData() { }
 }

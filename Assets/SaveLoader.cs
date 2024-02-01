@@ -4,11 +4,11 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveLoader : MonoBehaviour
+public static class SaveLoader
 {
-    IFormatter formatter = new BinaryFormatter();
+    static IFormatter formatter = new BinaryFormatter();
     // To save an object give it the object as the first parameter and then the filename with a file extension like .obj
-    public void Save(object obj, String filename) 
+    public static void Save(object obj, String filename) 
     {
         Type myType = obj.GetType();
         string dataPath = Application.persistentDataPath + "/" + myType.Name + filename;
@@ -26,7 +26,7 @@ public class SaveLoader : MonoBehaviour
     }
 
     // To load an object state give it the object as the first parameter and then the filename with a file extension
-    public object Load(object obj,String filename)
+    public static object Load(object obj,String filename)
     {
         Type myType = obj.GetType();
         string dataPath = Application.persistentDataPath + "/" + myType.Name + filename;
@@ -38,5 +38,13 @@ public class SaveLoader : MonoBehaviour
             JsonUtility.FromJsonOverwrite(json, obj);
             return obj;
         }
+    }
+
+    public static bool isSaveFile(object obj, String filename) 
+    {
+        Type myType = obj.GetType();
+        string dataPath = Application.persistentDataPath + "/" + myType.Name + filename;
+        obj = null;
+        return File.Exists(dataPath);
     }
 }
