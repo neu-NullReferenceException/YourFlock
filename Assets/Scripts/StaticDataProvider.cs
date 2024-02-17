@@ -51,6 +51,7 @@ public static class StaticDataProvider
     public static float musicVolume = 1f;
 
     //UNSAVED STUFF
+    public static bool hasNewFollower = false;
 
     public static void AddRadicallity(int amount)
     {
@@ -220,6 +221,12 @@ public static class StaticDataProvider
         Debug.Log("Made non-static class!");
         SaveLoader.Save(dd,"gameState.nre");
         Debug.Log("Saved game!");
+    }
+
+    public static void VipeSave()
+    {
+        DinamicData dd = new DinamicData(material, radicality, ammo, food, daysPassed, defaultFoodConsumption, defaultDeathMentalChange, defaultDaylyRadicalityChange, inventoryItems, craftingQueue, followers, banishedPeople, strikeTeam, HostilityMatrix, passedLaws, musicVolume, lastStandAbilityUnlocked, emergencyRationsUnlocked);
+        SaveLoader.DeleteFile(dd, "gameState.nre");
     }
 
     public static void loadGame()

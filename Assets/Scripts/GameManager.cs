@@ -108,11 +108,13 @@ public class GameManager : MonoBehaviour
     public GameObject[] measureRepresenterButtons;
     public InventoryItem sawdustMeal;
     public AudioSource musicAudio;
+    public GameObject newFollowerWindow;
+    public TextMeshProUGUI newFollowerNameText;
 
     private void Start()
     {
         Application.targetFrameRate = 60;
-        
+
         // DEV ONLY
         if (StaticDataProvider.isFirstTime)
         {
@@ -133,11 +135,9 @@ public class GameManager : MonoBehaviour
         {
             allCraftablesInGame.Add(StaticDataProvider.foodRecipe);
         }
+        
+
         //rationSlider.stepSize
-        if (SaveLoader.isSaveFile(new DinamicData(),"gameState.nre"))
-        {
-            StaticDataProvider.loadGame();
-        }
         UpdateResourceMetrics();
         SetStaticAudioLevel();
     }
@@ -707,6 +707,7 @@ public class GameManager : MonoBehaviour
         if(StaticDataProvider.followers.Count == 0)
         {
             Debug.Log("YOU LOST");
+            DeleteSave();
             SceneManager.LoadScene(7);
         }
         CraftAll();
@@ -900,5 +901,17 @@ public class GameManager : MonoBehaviour
         {
             musicAudio.volume = StaticDataProvider.musicVolume;
         }
+    }
+
+    public void NewFollower()
+    {
+        StaticDataProvider.hasNewFollower = false;
+        newFollowerWindow.SetActive(true);
+        newFollowerNameText.text = StaticDataProvider.followers[StaticDataProvider.followers.Count - 1].name + " has joined the Flock, and now following you!";
+    }
+
+    public void DeleteSave()
+    {
+        StaticDataProvider.VipeSave();
     }
 }

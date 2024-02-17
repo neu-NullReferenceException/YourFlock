@@ -47,4 +47,15 @@ public static class SaveLoader
         obj = null;
         return File.Exists(dataPath);
     }
+
+    public static void DeleteFile(object obj, String filename)
+    {
+        if (isSaveFile(obj, filename))
+        {
+            Type myType = obj.GetType();
+            string dataPath = Application.persistentDataPath + "/" + myType.Name + filename;
+            obj = null;
+            File.Delete(dataPath);
+        }
+    }
 }

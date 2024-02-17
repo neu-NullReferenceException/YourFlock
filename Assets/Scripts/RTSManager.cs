@@ -35,11 +35,13 @@ public class RTSManager : MonoBehaviour
     private bool touchInProgress;
     private float lastTouchDuration;
     private float touchStartTime;
+    private float timeOnArrival;
 
     // Start is called before the first frame update
     void Start()
     {
         SetupCMDCButtons();
+        timeOnArrival = Time.time;
     }
 
     public void SetupCMDCButtons()
@@ -267,6 +269,15 @@ public class RTSManager : MonoBehaviour
                 ItemDialogImage.sprite = chosenLoot.itemIcon;
                 ItemDialog.gameObject.SetActive(true);
             }
+        }
+    }
+
+    public void PrepareLeave()
+    {
+        if(Time.time - timeOnArrival > 60)
+        {
+            StaticDataProvider.AddRandomFollower(1);
+            StaticDataProvider.hasNewFollower = true;
         }
     }
 }

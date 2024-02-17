@@ -2823,6 +2823,7 @@ GameObject:
   - component: {fileID: 587318078}
   - component: {fileID: 587318079}
   - component: {fileID: 587318080}
+  - component: {fileID: 587318081}
   m_Layer: 0
   m_Name: MANAGER
   m_TagString: Untagged
@@ -2931,6 +2932,8 @@ MonoBehaviour:
   measureRepresenterButtons: []
   sawdustMeal: {fileID: 0}
   musicAudio: {fileID: 0}
+  newFollowerWindow: {fileID: 0}
+  newFollowerNameText: {fileID: 0}
 --- !u!114 &587318080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2977,6 +2980,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2d0ac0f6332f01d46b81c41bfd2e92ca, type: 3}
   - {fileID: 21300000, guid: 69dab1dcae4d5844a9471352a3a6975b, type: 3}
   - {fileID: 21300000, guid: 494eccc68271813418ee9c2079f04035, type: 3}
+--- !u!114 &587318081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587318077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342f75a03f1a92046a5e5e48d30f2fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &587530737
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,6 +59,7 @@ public class ExtractionZone : MonoBehaviour
 
     public void Leave()
     {
+        GameObject.Find("MANAGER").GetComponent<RTSManager>().PrepareLeave();
         List<Follower> left = GetLeftBehindFollowers();
         if (left.Count > 0)
         {
